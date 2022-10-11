@@ -176,7 +176,7 @@ export class Play extends Phaser.Scene {
             XD = 1;
             var casPoint = tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
-            this.Casilla(proxcas);
+            //this.Casilla(proxcas);
             this.Carta(proxcas);
             setTimeout(() => {
               //BotonDado.inputEnabled = true;
@@ -382,9 +382,9 @@ export class Play extends Phaser.Scene {
       new Carta( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      NCarta, 'alanpp', "xd",
+      NCarta, 'alanpp',
       this,
-      () => {this.roja()});
+      () => {this.Casilla(NCarta)});
     }
     Ganador(Jugador){
       this.add.text(this.cameras.main.centerX*0.5, this.cameras.main.centerY, Jugador.toUpperCase())
