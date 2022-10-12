@@ -52,10 +52,12 @@ export class Preloads extends Phaser.Scene {
     this.load.image('Jugador 3','assets/images/turno3.png');
     this.load.image('ContMoscas','assets/images/moscas.png');
     //Cartas
-    this.load.image('1','assets/images/cartas/Roja1.png')
-    this.load.image('2','assets/images/cartas/Verde1.png')
-    this.load.image('3','assets/images/cartas/Amarilla1.png')
-    this.load.image('4','assets/images/cartas/Verde2.png')
+    this.load.image('1','assets/images/cartas/Verde1.png');
+    this.load.image('2','assets/images/cartas/Amarilla1.png');
+    this.load.image('3','assets/images/cartas/Roja1.png');
+    this.load.image('4','assets/images/cartas/Verde2.png');
+    //Video
+    this.load.video('final','assets/images/omglf.mp4')
   }
 
   create() {

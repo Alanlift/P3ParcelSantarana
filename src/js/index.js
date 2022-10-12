@@ -5,7 +5,7 @@ import { Creditos } from "../scenes/creditos.js";
 import { Play } from "../scenes/play.js";
 import { Ayuda } from "../scenes/ayuda.js";
 import { Opcion } from "../scenes/opcion.js";
-
+import { Victoria} from "../scenes/victoria.js";
 const config = {
   type: Phaser.AUTO,
   width: 1600,
@@ -29,7 +29,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preloads, MainMenu, Creditos, Play, Opcion, Ayuda], // Listado de todas las escenas del juego, en orden
+  scene: [Preloads, MainMenu, Creditos, Play, Opcion, Ayuda, Victoria], // Listado de todas las escenas del juego, en orden
   // La primera escena es con la cual empieza el juego
 };
 

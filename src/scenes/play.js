@@ -157,26 +157,26 @@ export class Play extends Phaser.Scene {
           
           if (proxcas>=41) {
             let casPoint = tablero.findObject("Objetos", (obj) => obj.type === "41");
-            Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
-            victoria = this.sound.add('victoria');
-            victoria.play();
-            if (JTurno == '0') {
-              this.Ganador("GANASTE "+ "Jugador 1");
-                this.JugadorTurno("Jugador 1");
-              } else if (JTurno == '1'){
-                this.Ganador("GANASTE "+ "Jugador 2");
-                this.JugadorTurno("Jugador 2");
-              } else {
-                this.Ganador("GANASTE "+ "Jugador 3")
-                this.JugadorTurno("Jugador 3");
-              }
+            setTimeout(() => {
+              Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
+            }, 2000);
+            setTimeout(() => {
+              this.sound.stopAll(),
+              this.scene.start("Victoria", { JTurno: JTurno });
+            }, 3000);
+            
+            
             gameOver = true;
           } else {
             XD = 1;
             var casPoint = tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
-            Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
+            setTimeout(() => {
+              Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
+            }, 2000);
             //this.Casilla(proxcas);
-            this.Carta(proxcas);
+            setTimeout(() => {
+              this.Carta(proxcas);
+            }, 3000);
           }
       });
       BotonDado.achicar(0.2);
@@ -217,7 +217,9 @@ export class Play extends Phaser.Scene {
             }
             XD = 1;
             var casPoint = tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
-            Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
+            setTimeout(() => {
+              Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
+            }, 3000);
             this.Casilla(proxcas);
             this.turno();
         } else {
@@ -369,7 +371,7 @@ export class Play extends Phaser.Scene {
     }
 
     Dado(DNum){
-      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, DNum)
+      this.add.text(this.cameras.main.centerX*1.55, this.cameras.main.centerY*1.8, DNum)
       .setStyle({ 
           backgroundColor: '#71af45', fontSize: '50px', 
           fill: '#000000', 
@@ -383,14 +385,6 @@ export class Play extends Phaser.Scene {
       NCarta, 'alanpp',
       this,
       () => {this.Casilla(NCarta)});
-    }
-    Ganador(Jugador){
-      this.add.text(this.cameras.main.centerX*0.5, this.cameras.main.centerY, Jugador.toUpperCase())
-      .setStyle({ 
-          backgroundColor: '#71af45', fontSize: '60px', 
-          fill: '#000000', 
-          fontFamily: 'Arial'
-      });
     }
 }
 
