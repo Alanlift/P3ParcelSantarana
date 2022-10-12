@@ -10,8 +10,13 @@ class Button {
             callback();
             this.boton.disableInteractive();
             setTimeout(() => {
+                this.boton.alpha = 1
                 this.boton.setInteractive({ useHandCursor: true })
-              }, 2000);
+              }, 3000);
+              this.boton.alpha = 0.5
+        }
+        achicar(valor){
+            this.boton.setScale(valor);
         }
     }
 
