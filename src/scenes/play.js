@@ -23,7 +23,7 @@ var saltotesonido; //Sonido saltote
 var sonidorana;
 var victoria;
 var gameOver;
-
+let coco = 4800;
 // Clase Play, donde se crean todos los sprites, el escenario del juego y se inicializa y actualiza toda la logica del juego.
 export class Play extends Phaser.Scene {
   constructor() {
@@ -31,7 +31,7 @@ export class Play extends Phaser.Scene {
     super("Play");
   }
 
-
+  
   preload() {
       this.load.tilemapTiledJSON("tablero", "assets/tilemaps/tablero.json");
       this.load.image("tilesBelow", "assets/images/tablero_bg.png");
@@ -39,6 +39,8 @@ export class Play extends Phaser.Scene {
   }
 
   create() {
+    this.parallax = this.add.image(coco, 100, 'nubes_bg');
+    
     const tablero = this.make.tilemap({ key: "tablero"}); 
     const tilesetBelow = tablero.addTilesetImage(
       "tablero_bg",
@@ -135,10 +137,9 @@ export class Play extends Phaser.Scene {
       "dadoicon",
       this,
       () => {
-          //BotonDado.inputEnabled = false;
           sonid4.play();
           sonidorana.play();
-          var randomNumber = Math.floor(Math.random()*4) + 1;
+          let randomNumber = Math.floor(Math.random()*4) + 1;
           this.Dado(randomNumber);
           if (JTurno == '0') {
             this.JugadorTurno("Jugador 2");
@@ -155,10 +156,8 @@ export class Play extends Phaser.Scene {
           }
           
           if (proxcas>=41) {
-            var casPoint = tablero.findObject("Objetos", (obj) => obj.type === "41");
+            let casPoint = tablero.findObject("Objetos", (obj) => obj.type === "41");
             Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
-            //BotonDado.inputEnabled = false;
-            //BotonSalto.inputEnabled = false;
             victoria = this.sound.add('victoria');
             victoria.play();
             if (JTurno == '0') {
@@ -178,11 +177,9 @@ export class Play extends Phaser.Scene {
             Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
             //this.Casilla(proxcas);
             this.Carta(proxcas);
-            setTimeout(() => {
-              //BotonDado.inputEnabled = true;
-            }, 3000);
           }
       });
+      BotonDado.achicar(0.2);
       
       spawnPoint = tablero.findObject("Botones", (obj) => obj.name == ('Saltote'));
       let BotonSalto = new Button( //Lanzar saltote
@@ -267,13 +264,14 @@ export class Play extends Phaser.Scene {
   }
 
   update() {
-    if (gameOver) {
-      setTimeout(() => {
-        return;
-      }, 3000);
+    coco -=1;
+    this.parallax.setPosition(coco,100);
+    if (coco<-3000){
+      coco = 4800;
     }
   }
     //Funciones
+
     Casilla(proxcas){
         if (proxcas == 3 || proxcas == 6 || proxcas == 9 || proxcas == 12 || proxcas == 15 || proxcas == 18  || proxcas == 21 || proxcas == 24 || proxcas == 27 || proxcas == 30 || proxcas == 33 || proxcas == 36 || proxcas == 39){
           this.roja();
@@ -395,3 +393,4 @@ export class Play extends Phaser.Scene {
       });
     }
 }
+

@@ -22,6 +22,7 @@ export class Preloads extends Phaser.Scene {
     this.load.image('alanpp','assets/images/alanpp.png');
     this.load.image('juanpp','assets/images/juanpp.png');
     this.load.image('cabrapp','assets/images/cabrapp.png');
+    this.load.image('julipp','assets/images/julipp.png');
     //Backgrounds
     this.load.image('carga_bg','assets/images/carga_bg.png');
     this.load.image('menu_bg','assets/images/menu_bg.png');
@@ -29,6 +30,7 @@ export class Preloads extends Phaser.Scene {
     this.load.image('tablero_bg','assets/images/tablero_bg.png');
     this.load.image('tablero_blur','assets/images/tablero_blur.png');
     this.load.image('ayuda_bg','assets/images/ayuda_bg.png');
+    this.load.image('nubes_bg','assets/images/nubes.png');
     //Casilla y pjs
     this.load.image('sapo','assets/images/sapojg1.png');
     this.load.image('sapo2','assets/images/sapojg2.png');
@@ -41,7 +43,8 @@ export class Preloads extends Phaser.Scene {
     this.load.image('config','assets/images/configuracion.png');
     this.load.image('credit','assets/images/creditos.png');
     this.load.image('saltote','assets/images/saltote.png');
-    this.load.image('dadoicon','assets/images/dado.png');
+    this.load.image('dadoicon','assets/images/dado1.png');
+    this.load.image('dadoclick','assets/images/dado2.png');
     this.load.image('tuerca','assets/images/tuerca.png');
     //HUD
     this.load.image('Jugador 1','assets/images/turno1.png');
