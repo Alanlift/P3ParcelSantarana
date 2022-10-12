@@ -18,6 +18,9 @@ class Button {
         achicar(valor){
             this.boton.setScale(valor);
         }
+        detener(){
+            this.boton.disableInteractive();
+        }
     }
 
 export default Button;
