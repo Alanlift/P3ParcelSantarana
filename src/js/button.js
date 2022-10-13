@@ -21,6 +21,9 @@ class Button {
         detener(){
             this.boton.disableInteractive();
         }
+        cambiar(img2){
+            this.boton.setTexture(img2);
+        }
     }
 
 export default Button;

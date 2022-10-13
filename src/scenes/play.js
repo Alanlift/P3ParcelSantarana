@@ -24,6 +24,7 @@ var sonidorana;
 var victoria;
 var gameOver;
 let coco = 4800;
+let player;
 // Clase Play, donde se crean todos los sprites, el escenario del juego y se inicializa y actualiza toda la logica del juego.
 export class Play extends Phaser.Scene {
   constructor() {
@@ -182,7 +183,7 @@ export class Play extends Phaser.Scene {
       BotonDado.achicar(0.2);
       
       spawnPoint = tablero.findObject("Botones", (obj) => obj.name == ('Saltote'));
-      let BotonSalto = new Button( //Lanzar saltote
+      this.BotonSalto = new Button( //Lanzar saltote
       spawnPoint.x,
       spawnPoint.y,
       'saltote',
@@ -197,7 +198,6 @@ export class Play extends Phaser.Scene {
         }
           if (scoreac>=20 && proxcas+8<40)
           {
-            //BotonSalto.inputEnabled = true;
             saltotesonido.play();
               if (JTurno == '0') {
               this.JugadorTurno("Jugador 2");
@@ -219,20 +219,20 @@ export class Play extends Phaser.Scene {
             var casPoint = tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
+              this.Casilla(proxcas);
             }, 3000);
-            this.Casilla(proxcas);
-            this.turno();
-        } else {
-          //BotonSalto.inputEnabled = false;
-        } 
+            
+        }
         });
+        this.BotonSalto.achicar(0.12);
 
-      scorejg1 = 0;
-      scorejg2 = 0;
-      scorejg3 = 0;
-      scoreac = 0;
+      scorejg1 = 30;
+      scorejg2 = 30;
+      scorejg3 = 30;
+      scoreac = 30;
+
       spawnPoint = tablero.findObject("Botones", (obj) => obj.name == ('Score'));
-      this.add.image(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
+      this.moscas = this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
       scoretext = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.60, "", { //Texto Score
         fontSize: "36px",
         //fill: "#000000",
@@ -240,8 +240,8 @@ export class Play extends Phaser.Scene {
       });
 
     new Button( //Opciones
-      this.cameras.main.centerX/8,
-      this.cameras.main.centerY - this.cameras.main.centerY/1.2,
+        this.cameras.main.centerX/8,
+        this.cameras.main.centerY - this.cameras.main.centerY/1.2,
       "tuerca",
       this,
       () => {
@@ -263,6 +263,7 @@ export class Play extends Phaser.Scene {
       let musica = this.sound.add('tematab',{loop: true})
       musica.play();
       gameOver = false;
+      this.moscas.play("desfrog");
   }
 
   update() {
@@ -271,6 +272,12 @@ export class Play extends Phaser.Scene {
     if (coco<-3000){
       coco = 4800;
     }
+    if (scoreac>=20)
+    {
+      this.BotonSalto.cambiar('saltote2');
+      } else {
+        this.BotonSalto.cambiar('saltote');
+      }
   }
     //Funciones
 
@@ -359,7 +366,7 @@ export class Play extends Phaser.Scene {
 
     //Textos
     JugadorTurno(Turno){
-      this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(1.5);
+      this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(0.18);
       if (Turno == 'Jugador 1') {
         this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo").setScale(0.6);
       } else if (Turno == 'Jugador 2') {

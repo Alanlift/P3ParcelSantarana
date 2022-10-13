@@ -31,7 +31,7 @@ export class Victoria extends Phaser.Scene {
     }
 
     JugadorTurno(Turno){
-        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(1.5);
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(0.18);
         if (Turno == 'Jugador 1') {
           this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo").setScale(0.6);
         } else if (Turno == 'Jugador 2') {
