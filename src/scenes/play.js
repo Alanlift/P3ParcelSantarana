@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import Button from "../js/button.js";
-import Carta from "../js/cartas.js";
+import CartaVe from "../js/cartasve.js";
+import CartaRo from "../js/cartasro.js";
+import CartaAm from "../js/cartasam.js";
 //Variables de la escena
 var JTurno; //Para que funcione el movimiento
 var CTurno; //Para que funcione el score
@@ -58,13 +60,13 @@ export class Play extends Phaser.Scene {
 
     //worldLayer.setCollisionByProperty({ collides: true });
 
-    var spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo1");
+    let spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo1");
     // The player1 and its settings
-    let player1 = this.physics.add.image(spawnPoint.x, spawnPoint.y, "sapo");
+    let player1 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo").setScale(0.1);
     spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo2");
-    let player2 = this.physics.add.image(spawnPoint.x, spawnPoint.y, "sapo2");
+    let player2 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo2");
     spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo3");
-    let player3 = this.physics.add.image(spawnPoint.x, spawnPoint.y, "sapo3");
+    let player3 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo3");
     player1.setCollideWorldBounds(true);
     player2.setCollideWorldBounds(true);
     player3.setCollideWorldBounds(true);
@@ -171,12 +173,16 @@ export class Play extends Phaser.Scene {
           } else {
             XD = 1;
             var casPoint = tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
+            Players[JTurno].play('desfrog');
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
-            }, 2000);
-            //this.Casilla(proxcas);
+              Players[JTurno].play('sfrog');
+            }, 1500);
+            //this.Carta(proxcas);
             setTimeout(() => {
-              this.Carta(proxcas);
+              Players[JTurno].stop();
+              this.Casilla(proxcas);
+              Players[JTurno].setTexture('sapo');
             }, 3000);
           }
       });
@@ -221,7 +227,6 @@ export class Play extends Phaser.Scene {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
               this.Casilla(proxcas);
             }, 3000);
-            
         }
         });
         this.BotonSalto.achicar(0.12);
@@ -232,10 +237,10 @@ export class Play extends Phaser.Scene {
       scoreac = 30;
 
       spawnPoint = tablero.findObject("Botones", (obj) => obj.name == ('Score'));
-      this.moscas = this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
+      this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
       scoretext = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.60, "", { //Texto Score
         fontSize: "36px",
-        //fill: "#000000",
+        fill: "#000000",
         fontFamily: 'Arial'
       });
 
@@ -263,7 +268,6 @@ export class Play extends Phaser.Scene {
       let musica = this.sound.add('tematab',{loop: true})
       musica.play();
       gameOver = false;
-      this.moscas.play("desfrog");
   }
 
   update() {
@@ -283,11 +287,11 @@ export class Play extends Phaser.Scene {
 
     Casilla(proxcas){
         if (proxcas == 3 || proxcas == 6 || proxcas == 9 || proxcas == 12 || proxcas == 15 || proxcas == 18  || proxcas == 21 || proxcas == 24 || proxcas == 27 || proxcas == 30 || proxcas == 33 || proxcas == 36 || proxcas == 39){
-          this.roja();
+          this.CartaRoja(proxcas);
         } else if (proxcas == 1 || proxcas == 4 || proxcas == 7 || proxcas == 10 || proxcas == 13 || proxcas == 16 || proxcas == 19 || proxcas == 22 || proxcas == 25 || proxcas == 28 || proxcas == 31 || proxcas == 34 || proxcas == 37 || proxcas == 40){
-          this.verde();
+          this.CartaVerde(proxcas);
         } else {
-          this.amarilla();
+          this.CartaAmarilla(proxcas);
         }
       }
 
@@ -368,7 +372,7 @@ export class Play extends Phaser.Scene {
     JugadorTurno(Turno){
       this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(0.18);
       if (Turno == 'Jugador 1') {
-        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo").setScale(0.6);
+        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo").setScale(0.06);
       } else if (Turno == 'Jugador 2') {
         this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo2").setScale(0.6);
       } else if (Turno == 'Jugador 3'){
@@ -385,13 +389,30 @@ export class Play extends Phaser.Scene {
           fontFamily: 'Arial'
       });
     }
-    Carta(NCarta){
-      new Carta( //carta?
+    CartaRoja(NCarta){
+      new CartaRo( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      NCarta, 'alanpp',
+      NCarta,
       this,
-      () => {this.Casilla(NCarta)});
+      () => {this.roja()})
+    }
+    CartaAmarilla(NCarta){
+      new CartaAm( //carta?
+      this.cameras.main.centerX,
+      this.cameras.main.centerY,
+      NCarta,
+      this,
+      () => {this.amarilla()},() => { this.turno();
+      scoretext.setText(scoreac)})
+    }
+    CartaVerde(NCarta){
+      new CartaVe( //carta?
+      this.cameras.main.centerX,
+      this.cameras.main.centerY,
+      NCarta,
+      this,
+      () => {this.verde()})
     }
 }
 
