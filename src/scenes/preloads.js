@@ -39,6 +39,10 @@ export class Preloads extends Phaser.Scene {
       frameWidth: 1125,
       frameHeight: 834,
     });
+    this.load.spritesheet("spawn", "assets/images/sapospawn.png", {
+      frameWidth: 1125,
+      frameHeight: 834,
+    });
     this.load.image('vacio','assets/images/casillerovacio.png') //Vacio tuki
     //Botones
     this.load.image('ayuda','assets/images/ayuda.png');
@@ -61,6 +65,10 @@ export class Preloads extends Phaser.Scene {
     this.load.image('2','assets/images/cartas/Amarilla1.png');
     this.load.image('3','assets/images/cartas/Roja1.png');
     this.load.image('4','assets/images/cartas/Verde2.png');
+    //BotonesCartas
+    this.load.image('botonam1','assets/images/cartas/Boton1Amarilla.png');
+    this.load.image('botonam2','assets/images/cartas/Boton2Amarilla.png');
+    this.load.image('botonro1','assets/images/cartas/Boton1Rojo.png');
     //Video
     this.load.video('final','assets/images/omglf.mp4')
   }
@@ -81,10 +89,10 @@ export class Preloads extends Phaser.Scene {
            fill: '#6c4600', 
            fontFamily: 'Arial'
        })
-      this.player = this.add.sprite(this.cameras.main.centerX,
-        this.cameras.main.centerY, 'despawn');
-      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 2000, repeat:-1})
-    // Se agrega un timer y luego a la escena del menú principal
+      //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
+      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1500, repeat:0})
+      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1500, repeat:0})
+      // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");
       musica.play();
