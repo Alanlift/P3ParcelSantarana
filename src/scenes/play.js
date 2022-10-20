@@ -177,13 +177,13 @@ export class Play extends Phaser.Scene {
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
               Players[JTurno].play('sfrog');
-            }, 1500);
+            }, 1000);
             //this.Carta(proxcas);
             setTimeout(() => {
               Players[JTurno].stop();
               this.Casilla(proxcas);
               Players[JTurno].setTexture('sapo');
-            }, 3000);
+            }, 2000);
           }
       });
       BotonDado.achicar(0.2);

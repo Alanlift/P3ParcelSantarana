@@ -90,8 +90,8 @@ export class Preloads extends Phaser.Scene {
            fontFamily: 'Arial'
        })
       //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
-      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1500, repeat:0})
-      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1500, repeat:0})
+      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1000, repeat:0})
+      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1000, repeat:0})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");
