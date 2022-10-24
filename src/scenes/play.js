@@ -43,7 +43,7 @@ export class Play extends Phaser.Scene {
 
   create() {
     this.parallax = this.add.image(coco, 100, 'nubes_bg');
-    
+    let animaciones = [["desfrog", "sfrog"],["tpfrog","destpfrog"]];
     const tablero = this.make.tilemap({ key: "tablero"}); 
     const tilesetBelow = tablero.addTilesetImage(
       "tablero_bg",
@@ -60,13 +60,13 @@ export class Play extends Phaser.Scene {
 
     //worldLayer.setCollisionByProperty({ collides: true });
 
-    let spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo1");
     // The player1 and its settings
-    let player1 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo").setScale(0.1);
+    let spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo0");
+    let player1 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo0").setScale(0.1);
+    spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo1");
+    let player2 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo1").setScale(0.1);
     spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo2");
-    let player2 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo2");
-    spawnPoint = tablero.findObject("Players", (obj) => obj.name === "sapo3");
-    let player3 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo3");
+    let player3 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo2").setScale(0.1);
     player1.setCollideWorldBounds(true);
     player2.setCollideWorldBounds(true);
     player3.setCollideWorldBounds(true);
@@ -173,16 +173,16 @@ export class Play extends Phaser.Scene {
           } else {
             XD = 1;
             var casPoint = tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
-            Players[JTurno].play('desfrog');
+            Players[JTurno].play(animaciones[JTurno][0]);
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
-              Players[JTurno].play('sfrog');
+              Players[JTurno].play(animaciones[JTurno][1]);
             }, 1500);
             //this.Carta(proxcas);
             setTimeout(() => {
               Players[JTurno].stop();
               this.Casilla(proxcas);
-              Players[JTurno].setTexture('sapo');
+              Players[JTurno].setTexture('sapo'+ JTurno);
             }, 3000);
           }
       });
@@ -372,11 +372,11 @@ export class Play extends Phaser.Scene {
     JugadorTurno(Turno){
       this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(0.18);
       if (Turno == 'Jugador 1') {
-        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo").setScale(0.06);
+        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo0").setScale(0.06);
       } else if (Turno == 'Jugador 2') {
-        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo2").setScale(0.6);
+        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo1").setScale(0.06);
       } else if (Turno == 'Jugador 3'){
-        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo3").setScale(0.6);
+        this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo2").setScale(0.06);
       }
       
     }
@@ -393,7 +393,7 @@ export class Play extends Phaser.Scene {
       new CartaRo( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      NCarta,
+      '3',
       this,
       () => {this.roja()})
     }
@@ -401,7 +401,7 @@ export class Play extends Phaser.Scene {
       new CartaAm( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      NCarta,
+      '2',
       this,
       () => {this.amarilla()},() => { this.turno();
       scoretext.setText(scoreac)})
@@ -410,7 +410,7 @@ export class Play extends Phaser.Scene {
       new CartaVe( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      NCarta,
+      '1',
       this,
       () => {this.verde()})
     }
