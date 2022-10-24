@@ -31,15 +31,24 @@ export class Preloads extends Phaser.Scene {
     this.load.image('tablero_blur','assets/images/tablero_blur.png');
     this.load.image('ayuda_bg','assets/images/ayuda_bg.png');
     this.load.image('nubes_bg','assets/images/nubes.png');
+    this.load.image('victoria_bg','assets/images/victoria_bg.png');
     //Casilla y pjs
-    this.load.image('sapo','assets/images/sapojg1.png');
-    this.load.image('sapo2','assets/images/sapojg2.png');
-    this.load.image('sapo3','assets/images/sapojg3.png');
+    this.load.image('sapo0','assets/images/sapojg1.png');
+    this.load.image('sapo1','assets/images/sapojg2.png');
+    this.load.image('sapo2','assets/images/sapojg3.png');
     this.load.spritesheet("despawn", "assets/images/sapodespawn.png", {
       frameWidth: 1125,
       frameHeight: 834,
     });
     this.load.spritesheet("spawn", "assets/images/sapospawn.png", {
+      frameWidth: 1125,
+      frameHeight: 834,
+    });
+    this.load.spritesheet("destp", "assets/images/sapo2destp.png", {
+      frameWidth: 1125,
+      frameHeight: 834,
+    });
+    this.load.spritesheet("tp", "assets/images/sapo2tp.png", {
       frameWidth: 1125,
       frameHeight: 834,
     });
@@ -90,8 +99,10 @@ export class Preloads extends Phaser.Scene {
            fontFamily: 'Arial'
        })
       //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
-      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1000, repeat:0})
-      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1000, repeat:0})
+      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1500, repeat:0})
+      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1500, repeat:0})
+      this.anims.create({key:"destpfrog", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 1500, repeat:0})
+      this.anims.create({key:"tpfrog", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 1500, repeat:0})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");
