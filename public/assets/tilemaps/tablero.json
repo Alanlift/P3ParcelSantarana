@@ -546,6 +546,18 @@
                  "width":0,
                  "x":1000,
                  "y":281.333
+                }, 
+                {
+                 "height":0,
+                 "id":93,
+                 "name":"CasVerdes",
+                 "point":true,
+                 "rotation":0,
+                 "type":"0",
+                 "visible":true,
+                 "width":0,
+                 "x":255.392579810181,
+                 "y":796.548748921484
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -672,7 +684,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":93,
+ "nextobjectid":94,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

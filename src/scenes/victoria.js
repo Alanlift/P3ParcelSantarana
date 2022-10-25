@@ -28,14 +28,15 @@ export class Victoria extends Phaser.Scene {
     }
 
     JugadorTurno(Turno){
-        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, Turno).setScale(0.18);
+        let cartel = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY/1.25, Turno).setScale(0.4);
         if (Turno == 'Jugador 1') {
-          this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo").setScale(0.6);
+          this.add.image(this.cameras.main.centerX*1.15, this.cameras.main.centerY*1.3, "sapo0").setScale(0.2);
         } else if (Turno == 'Jugador 2') {
-          this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo2").setScale(0.6);
+          this.add.image(this.cameras.main.centerX*1.15, this.cameras.main.centerY*1.3, "sapo1").setScale(0.2);
         } else if (Turno == 'Jugador 3'){
-          this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo3").setScale(0.6);
+          this.add.image(this.cameras.main.centerX*1.15, this.cameras.main.centerY*1.3, "sapo2").setScale(0.2);
         }
+        cartel.play('victoriarda');
       }
 
       Ganador(Jugador){

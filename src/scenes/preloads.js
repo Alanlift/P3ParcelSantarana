@@ -52,6 +52,14 @@ export class Preloads extends Phaser.Scene {
       frameWidth: 1125,
       frameHeight: 834,
     });
+    this.load.spritesheet("tp3", "assets/images/sapo3tp.png", {
+      frameWidth: 1125,
+      frameHeight: 834,
+    });
+    this.load.spritesheet("victoriafinal", "assets/images/victoriafinal.png", {
+      frameWidth: 999,
+      frameHeight: 1000,
+    });
     this.load.image('vacio','assets/images/casillerovacio.png') //Vacio tuki
     //Botones
     this.load.image('ayuda','assets/images/ayuda.png');
@@ -78,8 +86,6 @@ export class Preloads extends Phaser.Scene {
     this.load.image('botonam1','assets/images/cartas/Boton1Amarilla.png');
     this.load.image('botonam2','assets/images/cartas/Boton2Amarilla.png');
     this.load.image('botonro1','assets/images/cartas/Boton1Rojo.png');
-    //Video
-    this.load.video('final','assets/images/omglf.mp4')
   }
 
   create() {
@@ -99,10 +105,12 @@ export class Preloads extends Phaser.Scene {
            fontFamily: 'Arial'
        })
       //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
-      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1500, repeat:0})
-      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1500, repeat:0})
-      this.anims.create({key:"destpfrog", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 1500, repeat:0})
-      this.anims.create({key:"tpfrog", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 1500, repeat:0})
+      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1000, repeat:0})
+      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1000, repeat:0})
+      this.anims.create({key:"tpfrog2", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 1000, repeat:0})
+      this.anims.create({key:"destpfrog2", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 1000, repeat:0})
+      this.anims.create({key:"tpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:0, end:10}), duration: 1000, repeat:0})
+      this.anims.create({key:"victoriarda", frames: this.anims.generateFrameNumbers("victoriafinal", {start:0, end:10}), duration: 2000, repeat:-1})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");

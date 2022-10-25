@@ -1,13 +1,27 @@
 {
-    "activeFile": "",
+    "activeFile": "tablero.json",
     "expandedProjectPaths": [
+        "."
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
+        "tablero.json": {
+            "scale": 0.7243749999999999,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 800.6902502157034,
+                "y": 481.7946505608285
+            }
+        },
+        "tablero.json#tablero_bg": {
+            "scaleInDock": 1
+        }
     },
     "openFiles": [
+        "tablero.json"
     ],
     "project": "Santarana.tiled-project",
     "recentFiles": [
+        "tablero.json"
     ]
 }
