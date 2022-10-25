@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Button from "../js/button.js";
+import Dice from "../js/dice.js";
 import CartaVe from "../js/cartasve.js";
 import CartaRo from "../js/cartasro.js";
 import CartaAm from "../js/cartasam.js";
@@ -42,7 +43,7 @@ export class Play extends Phaser.Scene {
 
   create() {
     this.parallax = this.add.image(coco, 100, 'nubes_bg');
-    let animaciones = [["desfrog", "sfrog"],["tpfrog2","destpfrog2"],["tpfrog3","destpfrog2"]];
+    let animaciones = [["desfrog", "sfrog"],["tpfrog2","destpfrog2"],["tpfrog3","destpfrog3"]];
     this.tablero = this.make.tilemap({ key: "tablero"}); 
     const tilesetBelow = this.tablero.addTilesetImage(
       "tablero_bg",
@@ -130,28 +131,30 @@ export class Play extends Phaser.Scene {
     proxcasjg1 = 0;
     proxcasjg2 = 0;
     proxcasjg3 = 0;
+    this.Casillas = [proxcasjg1, proxcasjg2, proxcasjg3]
     this.JugadorTurno("Jugador 1");
 
     spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Dado'));
-    let BotonDado = new Button( //Lanzar Dado
+    let BotonDado = new Dice( //Lanzar Dado
       spawnPoint.x,
       spawnPoint.y,
       "dadoicon",
       this,
       () => {
+          BotonDado.conseguir().play('dadoanim');
           sonid4.play();
           sonidorana.play();
           let randomNumber = Math.floor(Math.random()*4) + 1;
           this.Dado(randomNumber);
           if (JTurno == '0') {
-            proxcasjg1 += randomNumber;
-            proxcas = proxcasjg1;
+            this.Casillas[JTurno] += randomNumber;
+            proxcas = this.Casillas[JTurno];
           } else if (JTurno == '1') {
-            proxcasjg2 += randomNumber;
-            proxcas = proxcasjg2;
+            this.Casillas[JTurno] += randomNumber;
+            proxcas = this.Casillas[JTurno];
           } else {
-            proxcasjg3 += randomNumber;
-            proxcas = proxcasjg3;
+            this.Casillas[JTurno] += randomNumber;
+            proxcas = this.Casillas[JTurno];
           }
           
           if (proxcas>=41) {
@@ -169,17 +172,21 @@ export class Play extends Phaser.Scene {
           } else {
             XD = 1;
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
-            Players[JTurno].play(animaciones[JTurno][0]);
+            setTimeout(() => {
+              Players[JTurno].play(animaciones[JTurno][0]);
+            }, 1000);
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
               Players[JTurno].play(animaciones[JTurno][1]);
-            }, 1000);
+            }, 2000);
             //this.Carta(proxcas);
             setTimeout(() => {
               Players[JTurno].stop();
               this.Casilla(proxcas, Players[JTurno]);
               Players[JTurno].setTexture('sapo'+ JTurno);
-            }, 2000);
+              BotonDado.conseguir().stop();
+              BotonDado.cambiar('dadoicon');
+            }, 3000);
           }
       });
       BotonDado.achicar(0.2);
@@ -192,42 +199,43 @@ export class Play extends Phaser.Scene {
       this,
       () => {
         if (JTurno == '0') {
-          proxcas = proxcasjg1;
+          proxcas = this.Casillas[JTurno];
         } else if (JTurno == '1') {
-          proxcas = proxcasjg2;
+          this.Casillas[JTurno] += 8;
+          proxcas = this.Casillas[JTurno];
         } else {
-          proxcas = proxcasjg3;
+          proxcas = this.Casillas[JTurno];
         }
           if (scoreac>=20 && proxcas+8<40)
           {
             saltotesonido.play();
               if (JTurno == '0') {
-              proxcasjg1 += 8;
-              proxcas = proxcasjg1;
+              this.Casillas[JTurno] += 8;
+              proxcas = this.Casillas[JTurno];
               scorejg1-=20;
             } else if (JTurno == '1') {
-              proxcasjg2 += 8;
-              proxcas = proxcasjg2;
+              this.Casillas[JTurno] += 8;
+              proxcas = this.Casillas[JTurno];
               scorejg2-=20;
             } else {
-              proxcasjg3 += 8;
-              proxcas = proxcasjg3;
+              this.Casillas[JTurno] += 8;
+              proxcas = this.Casillas[JTurno];
               scorejg3-=20;
             }
             XD = 1;
             var casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
-              this.Casilla(proxcas);
+              this.Casilla(proxcas, Players[JTurno])
             }, 3000);
         }
         });
         this.BotonSalto.achicar(0.12);
 
-      scorejg1 = 300;
-      scorejg2 = 300;
-      scorejg3 = 300;
-      scoreac = 30;
+      scorejg1 = 0;
+      scorejg2 = 0;
+      scorejg3 = 0;
+      scoreac = 0;
 
       spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Score'));
       this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
@@ -290,23 +298,32 @@ export class Play extends Phaser.Scene {
       }
 
     roja(){
-      if (XD == 1) {
+      if (this.d20() >= 10) {
         if (CTurno == 'Jugador 1') {
           scorejg1 += 10;
           scoreac = scorejg2;
-          XD +=1;
         } else if (CTurno == 'Jugador 2') {
           scorejg2 += 10;
           scoreac = scorejg3;
-          XD +=1;
         } else if (CTurno == 'Jugador 3'){
           scorejg3 += 10;
           scoreac = scorejg1;
-          XD +=1;
         }
-        this.turno();
-        scoretext.setText(scoreac);
+      } else {
+        if (CTurno == 'Jugador 1') {
+          scorejg1 -= 10;
+          scoreac = scorejg2;
+        } else if (CTurno == 'Jugador 2') {
+          scorejg2 -= 10;
+          scoreac = scorejg3;
+        } else if (CTurno == 'Jugador 3'){
+          scorejg3 -= 10;
+          scoreac = scorejg1;
+        }
       }
+      this.turno();
+      scoretext.setText(scoreac);
+      this.moscatext.setStyle({backgroundColor: '',fill: "" });
     }
 
     verde(){
@@ -326,6 +343,7 @@ export class Play extends Phaser.Scene {
         }
         this.turno();
         scoretext.setText(scoreac);
+        this.moscatext.setStyle({backgroundColor: '',fill: "" });
       }
     }
 
@@ -335,23 +353,27 @@ export class Play extends Phaser.Scene {
           const numcas = parseInt(proxcas) + 2;
           let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
           pos.setPosition(casPoint.x+1, casPoint.y+1);
+          this.Casillas[JTurno] +=2;
         } else if (CTurno == 'Jugador 2') {
           const numcas = parseInt(proxcas) + 2;
           let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
           pos.setPosition(casPoint.x+1, casPoint.y+1);
+          this.Casillas[JTurno] +=2;
         } else if (CTurno == 'Jugador 3'){
           const numcas = parseInt(proxcas) + 2;
           let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
           pos.setPosition(casPoint.x+1, casPoint.y+1);
-          scoreac = scorejg1;
+          this.Casillas[JTurno] +=2;
         }
       } else {
         const numcas = parseInt(proxcas) - 2;
         let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
         pos.setPosition(casPoint.x+1, casPoint.y+1);
+        this.Casillas[JTurno] -=2;
       }
       this.turno();
       scoretext.setText(scoreac);
+      this.moscatext.setStyle({backgroundColor: '',fill: "" });
     }
 
     turno(){
@@ -384,12 +406,12 @@ export class Play extends Phaser.Scene {
     }
 
     Dado(DNum){
-      this.add.text(this.cameras.main.centerX*1.55, this.cameras.main.centerY*1.8, DNum)
+      setTimeout(() => {
+      this.moscatext = this.add.text(this.cameras.main.centerX*1.45, this.cameras.main.centerY*1.72, DNum)
       .setStyle({ 
-          backgroundColor: '#71af45', fontSize: '50px', 
-          fill: '#000000', 
+          backgroundColor: '#a879ff', fontSize: '50px', 
           fontFamily: 'Arial'
-      });
+      })}, 500);;
     }
     CartaRoja(NCarta){
       new CartaRo( //carta?

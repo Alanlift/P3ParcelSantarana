@@ -7,10 +7,10 @@
     "fileStates": {
         "tablero.json": {
             "scale": 0.7243749999999999,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 800.6902502157034,
-                "y": 481.7946505608285
+                "x": 255.39257981018125,
+                "y": 796.5487489214843
             }
         },
         "tablero.json#tablero_bg": {

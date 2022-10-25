@@ -57,7 +57,11 @@ export class Preloads extends Phaser.Scene {
       frameHeight: 834,
     });
     this.load.spritesheet("victoriafinal", "assets/images/victoriafinal.png", {
-      frameWidth: 999,
+      frameWidth: 1000,
+      frameHeight: 1000,
+    });
+    this.load.spritesheet("dadoanimazao", "assets/images/dadoanimazao.png", {
+      frameWidth: 1000,
       frameHeight: 1000,
     });
     this.load.image('vacio','assets/images/casillerovacio.png') //Vacio tuki
@@ -110,7 +114,9 @@ export class Preloads extends Phaser.Scene {
       this.anims.create({key:"tpfrog2", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 1000, repeat:0})
       this.anims.create({key:"destpfrog2", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 1000, repeat:0})
       this.anims.create({key:"tpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:0, end:10}), duration: 1000, repeat:0})
+      this.anims.create({key:"destpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:10, end:0}), duration: 1000, repeat:0})
       this.anims.create({key:"victoriarda", frames: this.anims.generateFrameNumbers("victoriafinal", {start:0, end:10}), duration: 2000, repeat:-1})
+      this.anims.create({key:"dadoanim", frames: this.anims.generateFrameNumbers("dadoanimazao", {start:0, end:4}), duration: 500, repeat:0})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");

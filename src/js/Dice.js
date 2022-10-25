@@ -1,8 +1,8 @@
 // Clase Boton, para no repetir tanto codigo
-class Button {
+class Dice {
     boton;
     constructor(x, y, img, scene, callback) {
-            this.boton = scene.add.image(x, y, img)
+            this.boton = scene.add.sprite(x, y, img)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.desactivar(callback))
         }
@@ -10,10 +10,10 @@ class Button {
             callback();
             this.boton.disableInteractive();
             setTimeout(() => {
-                this.boton.alpha = 1
+                //this.boton.alpha = 1
                 this.boton.setInteractive({ useHandCursor: true })
               }, 3000);
-              this.boton.alpha = 0.5
+              //this.boton.alpha = 0.5
         }
         achicar(valor){
             this.boton.setScale(valor);
@@ -29,4 +29,4 @@ class Button {
         }
     }
 
-export default Button;
+export default Dice;
