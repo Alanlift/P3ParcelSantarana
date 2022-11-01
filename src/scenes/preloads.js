@@ -14,10 +14,14 @@ export class Preloads extends Phaser.Scene {
     this.load.audio('sonidorana','assets/sounds/sonidorana.mp3');
     this.load.audio('tematab','assets/sounds/CancionTablero.mp3');
     this.load.audio('temamen','assets/sounds/CancionMenu.mp3');
-    this.load.audio('victoria','assets/sounds/victoria.mp3');
+    this.load.audio('victoria','assets/sounds/victoria.wav');
     this.load.audio('alan','assets/sounds/alansonido.mp3');
     this.load.audio('cabra','assets/sounds/cabrasonido.mp3');
     this.load.audio('juan','assets/sounds/juansonido.mp3');
+    this.load.audio('botonmenuson','assets/sounds/boton_de_menu.wav');
+    this.load.audio('tp1son','assets/sounds/TP_1.wav');
+    this.load.audio('tp2son','assets/sounds/TP_2.wav');
+    this.load.audio('tp3son','assets/sounds/TP_3.wav');
     //Fotos
     this.load.image('alanpp','assets/images/alanpp.png');
     this.load.image('juanpp','assets/images/juanpp.png');

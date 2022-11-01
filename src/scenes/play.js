@@ -8,16 +8,16 @@ import CartaAm from "../js/cartasam.js";
 var JTurno; //Para que funcione el movimiento
 var CTurno; //Para que funcione el score
 var proxcas;
-var proxcasjg1;
-var proxcasjg2;
-var proxcasjg3;
+let proxcasjg1;
+let proxcasjg2;
+let proxcasjg3;
 var CasRojas;
 var CasVerdes;
 var CasAmar;
 //Scores
-var scorejg1;
-var scorejg2;
-var scorejg3;
+let scorejg1;
+let scorejg2;
+let scorejg3;
 var scoretext;
 var scoreac;
 var XD;
@@ -43,8 +43,12 @@ export class Play extends Phaser.Scene {
 
   create() {
     this.parallax = this.add.image(coco, 100, 'nubes_bg');
-    let animaciones = [["desfrog", "sfrog"],["tpfrog2","destpfrog2"],["tpfrog3","destpfrog3"]];
-    this.tablero = this.make.tilemap({ key: "tablero"}); 
+    const animaciones = [["desfrog", "sfrog"],["tpfrog2","destpfrog2"],["tpfrog3","destpfrog3"]];
+    const tp1son= this.sound.add('tp1son');
+    const tp2son= this.sound.add('tp2son');
+    const tp3son= this.sound.add('tp3son');
+    const sonidoanimaciones = [tp1son, tp2son, tp3son];
+    this.tablero = this.make.tilemap({ key: "tablero"});
     const tilesetBelow = this.tablero.addTilesetImage(
       "tablero_bg",
       "tilesBelow"
@@ -131,7 +135,13 @@ export class Play extends Phaser.Scene {
     proxcasjg1 = 0;
     proxcasjg2 = 0;
     proxcasjg3 = 0;
-    this.Casillas = [proxcasjg1, proxcasjg2, proxcasjg3]
+    this.Casillas = [proxcasjg1, proxcasjg2, proxcasjg3];
+    scoreac = 0;
+    scorejg1 = 0;
+    scorejg2 = 0;
+    scorejg3 = 0;
+    this.Puntajes = [scorejg1, scorejg2, scorejg3];
+    this.Siguiente = [1, 2, 0];
     this.JugadorTurno("Jugador 1");
 
     spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Dado'));
@@ -174,6 +184,7 @@ export class Play extends Phaser.Scene {
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
               Players[JTurno].play(animaciones[JTurno][0]);
+              sonidoanimaciones[JTurno].play();
             }, 1000);
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
@@ -183,6 +194,7 @@ export class Play extends Phaser.Scene {
             setTimeout(() => {
               Players[JTurno].stop();
               this.Casilla(proxcas, Players[JTurno]);
+              console.log("Jugador " + JTurno + ": " + this.Puntajes[JTurno]);
               Players[JTurno].setTexture('sapo'+ JTurno);
               BotonDado.conseguir().stop();
               BotonDado.cambiar('dadoicon');
@@ -209,19 +221,9 @@ export class Play extends Phaser.Scene {
           if (scoreac>=20 && proxcas+8<40)
           {
             saltotesonido.play();
-              if (JTurno == '0') {
-              this.Casillas[JTurno] += 8;
-              proxcas = this.Casillas[JTurno];
-              scorejg1-=20;
-            } else if (JTurno == '1') {
-              this.Casillas[JTurno] += 8;
-              proxcas = this.Casillas[JTurno];
-              scorejg2-=20;
-            } else {
-              this.Casillas[JTurno] += 8;
-              proxcas = this.Casillas[JTurno];
-              scorejg3-=20;
-            }
+            this.Casillas[JTurno] += 8;
+            proxcas = this.Casillas[JTurno];
+            this.Puntajes[JTurno]-=20;
             XD = 1;
             var casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
@@ -231,11 +233,6 @@ export class Play extends Phaser.Scene {
         }
         });
         this.BotonSalto.achicar(0.12);
-
-      scorejg1 = 0;
-      scorejg2 = 0;
-      scorejg3 = 0;
-      scoreac = 0;
 
       spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Score'));
       this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
@@ -299,27 +296,11 @@ export class Play extends Phaser.Scene {
 
     roja(){
       if (this.d20() >= 10) {
-        if (CTurno == 'Jugador 1') {
-          scorejg1 += 10;
-          scoreac = scorejg2;
-        } else if (CTurno == 'Jugador 2') {
-          scorejg2 += 10;
-          scoreac = scorejg3;
-        } else if (CTurno == 'Jugador 3'){
-          scorejg3 += 10;
-          scoreac = scorejg1;
-        }
+        this.Puntajes[JTurno]+=10;
+        scoreac = this.Puntajes[this.Siguiente[JTurno]];
       } else {
-        if (CTurno == 'Jugador 1') {
-          scorejg1 -= 10;
-          scoreac = scorejg2;
-        } else if (CTurno == 'Jugador 2') {
-          scorejg2 -= 10;
-          scoreac = scorejg3;
-        } else if (CTurno == 'Jugador 3'){
-          scorejg3 -= 10;
-          scoreac = scorejg1;
-        }
+        this.Puntajes[JTurno]-=10;
+        scoreac = this.Puntajes[this.Siguiente[JTurno]];
       }
       this.turno();
       scoretext.setText(scoreac);
@@ -327,49 +308,26 @@ export class Play extends Phaser.Scene {
     }
 
     verde(){
-      if (XD == 1) {
-        if (CTurno == 'Jugador 1') {
-          scorejg1 += 5;
-          scoreac = scorejg2;
-          XD +=1;
-        } else if (CTurno == 'Jugador 2') {
-          scorejg2 += 5;
-          scoreac = scorejg3;
-          XD +=1;
-        } else if (CTurno == 'Jugador 3'){
-          scorejg3 += 5;
-          scoreac = scorejg1;
-          XD +=1;
-        }
+        this.Puntajes[JTurno]+=5;
+        scoreac = this.Puntajes[this.Siguiente[JTurno]];
         this.turno();
         scoretext.setText(scoreac);
         this.moscatext.setStyle({backgroundColor: '',fill: "" });
-      }
     }
 
     amarilla(proxcas, pos){
       if (this.d20() >= 8) {
-        if (CTurno == 'Jugador 1') {
-          const numcas = parseInt(proxcas) + 2;
-          let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
-          pos.setPosition(casPoint.x+1, casPoint.y+1);
-          this.Casillas[JTurno] +=2;
-        } else if (CTurno == 'Jugador 2') {
-          const numcas = parseInt(proxcas) + 2;
-          let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
-          pos.setPosition(casPoint.x+1, casPoint.y+1);
-          this.Casillas[JTurno] +=2;
-        } else if (CTurno == 'Jugador 3'){
-          const numcas = parseInt(proxcas) + 2;
-          let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
-          pos.setPosition(casPoint.x+1, casPoint.y+1);
-          this.Casillas[JTurno] +=2;
-        }
+        const numcas = parseInt(proxcas) + 2;
+        let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
+        pos.setPosition(casPoint.x+1, casPoint.y+1);
+        this.Casillas[JTurno] +=2;
+        scoreac = this.Puntajes[this.Siguiente[JTurno]];
       } else {
         const numcas = parseInt(proxcas) - 2;
         let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
         pos.setPosition(casPoint.x+1, casPoint.y+1);
         this.Casillas[JTurno] -=2;
+        scoreac = this.Puntajes[this.Siguiente[JTurno]];
       }
       this.turno();
       scoretext.setText(scoreac);

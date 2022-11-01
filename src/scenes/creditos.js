@@ -10,12 +10,13 @@ export class Creditos extends Phaser.Scene {
 
     create() {
         // Boton para volver
+        const botonmenu = this.sound.add('botonmenuson'); 
         this.add.image(this.cameras.main.centerX,
             this.cameras.main.centerY,
                  'custom_bg').setScale(1.1);
         const boton = new Button(this.cameras.main.centerX*0.15,
             this.cameras.main.centerY, 'volver', this, () => {
-            // Instrucción para pasar a la escena Play
+            botonmenu.play();
             this.scene.switch("MainMenu");
         });
         let juan = this.sound.add('juan');
