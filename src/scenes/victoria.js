@@ -14,6 +14,8 @@ export class Victoria extends Phaser.Scene {
         JTurno = data.JTurno;
       }
     create() {
+      const victoria = this.sound.add('victoria');
+      victoria.play();
       this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'victoria_bg');
         if (JTurno == '0') {
             this.Ganador("GANASTE "+ "Jugador 1");
