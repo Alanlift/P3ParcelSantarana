@@ -20,7 +20,6 @@ let scorejg2;
 let scorejg3;
 var scoretext;
 var scoreac;
-var XD;
 var sonid4; //Sonido dado d4
 var saltotesonido; //Sonido saltote
 var sonidorana;
@@ -43,7 +42,9 @@ export class Play extends Phaser.Scene {
 
   create() {
     this.parallax = this.add.image(coco, 100, 'nubes_bg');
-    const animaciones = [["desfrog", "sfrog"],["tpfrog2","destpfrog2"],["tpfrog3","destpfrog3"]];
+    const animaciones = [["desfrog", "sfrog","saltote1","dessaltote1"],
+    ["tpfrog2", "destpfrog2", "saltote2", "dessaltote2"],
+    ["tpfrog3", "destpfrog3", "saltote3", "dessaltote3"]];
     const tp1son= this.sound.add('tp1son');
     const tp2son= this.sound.add('tp2son');
     const tp3son= this.sound.add('tp3son');
@@ -64,13 +65,13 @@ export class Play extends Phaser.Scene {
 
     //worldLayer.setCollisionByProperty({ collides: true });
 
-    // The player1 and its settings
-    let spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo0");
-    let player1 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo0").setScale(0.1);
+    // The players and its settings
+    let spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo2");
+    let player3 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo2").setScale(0.1);
     spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo1");
     let player2 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo1").setScale(0.1);
-    spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo2");
-    let player3 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo2").setScale(0.1);
+    spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo0");
+    let player1 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo0").setScale(0.1);
     player1.setCollideWorldBounds(true);
     player2.setCollideWorldBounds(true);
     player3.setCollideWorldBounds(true);
@@ -137,35 +138,27 @@ export class Play extends Phaser.Scene {
     proxcasjg3 = 0;
     this.Casillas = [proxcasjg1, proxcasjg2, proxcasjg3];
     scoreac = 0;
-    scorejg1 = 0;
-    scorejg2 = 0;
-    scorejg3 = 0;
+    scorejg1 = 10;
+    scorejg2 = 20;
+    scorejg3 = 10;
     this.Puntajes = [scorejg1, scorejg2, scorejg3];
     this.Siguiente = [1, 2, 0];
     this.JugadorTurno("Jugador 1");
 
     spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Dado'));
-    let BotonDado = new Dice( //Lanzar Dado
+    this.BotonDado = new Dice( //Lanzar Dado
       spawnPoint.x,
       spawnPoint.y,
       "dadoicon",
       this,
       () => {
-          BotonDado.conseguir().play('dadoanim');
+          this.BotonDado.conseguir().play('dadoanim');
           sonid4.play();
           sonidorana.play();
           let randomNumber = Math.floor(Math.random()*4) + 1;
           this.Dado(randomNumber);
-          if (JTurno == '0') {
-            this.Casillas[JTurno] += randomNumber;
-            proxcas = this.Casillas[JTurno];
-          } else if (JTurno == '1') {
-            this.Casillas[JTurno] += randomNumber;
-            proxcas = this.Casillas[JTurno];
-          } else {
-            this.Casillas[JTurno] += randomNumber;
-            proxcas = this.Casillas[JTurno];
-          }
+          this.Casillas[JTurno] += randomNumber;
+          proxcas = this.Casillas[JTurno];
           
           if (proxcas>=41) {
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type === "41");
@@ -177,60 +170,61 @@ export class Play extends Phaser.Scene {
               this.scene.start("Victoria", { JTurno: JTurno });
             }, 3000);
             
-            
             gameOver = true;
           } else {
-            XD = 1;
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
               Players[JTurno].play(animaciones[JTurno][0]);
               sonidoanimaciones[JTurno].play();
-            }, 1000);
+            }, 500);
             setTimeout(() => {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
               Players[JTurno].play(animaciones[JTurno][1]);
-            }, 2000);
-            //this.Carta(proxcas);
+            }, 1000);
             setTimeout(() => {
               Players[JTurno].stop();
               this.Casilla(proxcas, Players[JTurno]);
               console.log("Jugador " + JTurno + ": " + this.Puntajes[JTurno]);
               Players[JTurno].setTexture('sapo'+ JTurno);
-              BotonDado.conseguir().stop();
-              BotonDado.cambiar('dadoicon');
-            }, 3000);
+              this.BotonDado.conseguir().stop();
+              this.BotonDado.cambiar('dadoicon');
+            }, 1500);
           }
       });
-      BotonDado.achicar(0.2);
-      
+      this.BotonDado.achicar(0.2);
+      let posac;
       spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Saltote'));
-      this.BotonSalto = new Button( //Lanzar saltote
+      this.BotonSalto = new Dice( //Lanzar saltote
       spawnPoint.x,
       spawnPoint.y,
       'saltote',
       this,
       () => {
-        if (JTurno == '0') {
-          proxcas = this.Casillas[JTurno];
-        } else if (JTurno == '1') {
-          this.Casillas[JTurno] += 8;
-          proxcas = this.Casillas[JTurno];
-        } else {
-          proxcas = this.Casillas[JTurno];
-        }
           if (scoreac>=20 && proxcas+8<40)
           {
             saltotesonido.play();
+            let posac = this.tablero.findObject("Objetos", (obj) => obj.type == (this.Casillas[JTurno]).toString());
             this.Casillas[JTurno] += 8;
             proxcas = this.Casillas[JTurno];
             this.Puntajes[JTurno]-=20;
-            XD = 1;
-            var casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
+            let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
-              Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1)
-              this.Casilla(proxcas, Players[JTurno])
+              Players[JTurno].setPosition(posac.x+1, posac.y*0.9);
+              Players[JTurno].play(animaciones[JTurno][2]);
+              sonidoanimaciones[JTurno].play();
+            }, 1000);
+            setTimeout(() => {
+              Players[JTurno].setPosition(casPoint.x+1, casPoint.y*0.9);
+              Players[JTurno].play(animaciones[JTurno][3]);
+            }, 2000);
+            setTimeout(() => {
+              Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
+              Players[JTurno].stop();
+              this.Casilla(proxcas, Players[JTurno]);
+              console.log("Jugador " + JTurno + ": " + this.Puntajes[JTurno]);
+              Players[JTurno].setTexture('sapo'+ JTurno);
             }, 3000);
-        }
+          }
         });
         this.BotonSalto.achicar(0.12);
 
@@ -276,9 +270,10 @@ export class Play extends Phaser.Scene {
       coco = 4800;
     }
     if (scoreac>=20)
-    {
-      this.BotonSalto.cambiar('saltote2');
+      {
+        this.BotonSalto.conseguir().play('saltoteanim');
       } else {
+        this.BotonSalto.conseguir().stop();
         this.BotonSalto.cambiar('saltote');
       }
   }
@@ -348,6 +343,8 @@ export class Play extends Phaser.Scene {
         CTurno = 'Jugador 1';
         this.JugadorTurno(CTurno);
       }
+      this.BotonDado.activar()
+      this.BotonSalto.activar()
     }
 
     //Textos
@@ -385,7 +382,7 @@ export class Play extends Phaser.Scene {
       this.cameras.main.centerY,
       '2',
       this,
-      () => {this.amarilla(NCarta, pos)},() => { this.turno();
+      () => {this.amarilla(NCarta, pos)},() => { this.turno(),
       scoretext.setText(scoreac)})
     }
     CartaVerde(NCarta){

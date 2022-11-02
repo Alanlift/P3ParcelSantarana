@@ -9,11 +9,9 @@ class Dice {
         desactivar(callback){
             callback();
             this.boton.disableInteractive();
-            setTimeout(() => {
-                //this.boton.alpha = 1
-                this.boton.setInteractive({ useHandCursor: true })
-              }, 3000);
-              //this.boton.alpha = 0.5
+        }
+        activar(){
+            this.boton.setInteractive({ useHandCursor: true })
         }
         achicar(valor){
             this.boton.setScale(valor);

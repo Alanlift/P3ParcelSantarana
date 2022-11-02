@@ -68,6 +68,23 @@ export class Preloads extends Phaser.Scene {
       frameWidth: 1000,
       frameHeight: 1000,
     });
+    this.load.spritesheet('saltoteanimazao','assets/images/saltote2.png',{
+    frameWidth: 1600,
+    frameHeight: 1200,
+    });
+    this.load.spritesheet('elsaltote1','assets/images/sapo1saltote.png',{
+      frameWidth: 1069,
+      frameHeight: 2427,
+    });
+    this.load.spritesheet('elsaltote2','assets/images/sapo2saltote.png',{
+      frameWidth: 1069,
+      frameHeight: 2427,
+    });
+    this.load.spritesheet('elsaltote3','assets/images/sapo3saltote.png',{
+      frameWidth: 1069,
+      frameHeight: 2427,
+    });
+
     this.load.image('vacio','assets/images/casillerovacio.png') //Vacio tuki
     //Botones
     this.load.image('ayuda','assets/images/ayuda.png');
@@ -76,7 +93,6 @@ export class Preloads extends Phaser.Scene {
     this.load.image('config','assets/images/configuracion.png');
     this.load.image('credit','assets/images/creditos.png');
     this.load.image('saltote','assets/images/saltote.png');
-    this.load.image('saltote2','assets/images/saltote2.png');
     this.load.image('dadoicon','assets/images/dado1.png');
     this.load.image('dadoclick','assets/images/dado2.png');
     this.load.image('tuerca','assets/images/tuerca.png');
@@ -115,12 +131,19 @@ export class Preloads extends Phaser.Scene {
       //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
       this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1000, repeat:0})
       this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1000, repeat:0})
+      this.anims.create({key:"saltote1", frames: this.anims.generateFrameNumbers("elsaltote1", {start:9, end:0}), duration: 500, repeat:0})
+      this.anims.create({key:"dessaltote1", frames: this.anims.generateFrameNumbers("elsaltote1", {start:0, end:9}), duration: 500, repeat:0})
+      this.anims.create({key:"saltote2", frames: this.anims.generateFrameNumbers("elsaltote2", {start:9, end:0}), duration: 500, repeat:0})
+      this.anims.create({key:"dessaltote2", frames: this.anims.generateFrameNumbers("elsaltote2", {start:0, end:9}), duration: 500, repeat:0})
+      this.anims.create({key:"saltote3", frames: this.anims.generateFrameNumbers("elsaltote3", {start:9, end:0}), duration: 500, repeat:0})
+      this.anims.create({key:"dessaltote3", frames: this.anims.generateFrameNumbers("elsaltote3", {start:0, end:9}), duration: 500, repeat:0})
       this.anims.create({key:"tpfrog2", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 1000, repeat:0})
       this.anims.create({key:"destpfrog2", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 1000, repeat:0})
       this.anims.create({key:"tpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:0, end:10}), duration: 1000, repeat:0})
       this.anims.create({key:"destpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:10, end:0}), duration: 1000, repeat:0})
       this.anims.create({key:"victoriarda", frames: this.anims.generateFrameNumbers("victoriafinal", {start:0, end:10}), duration: 2000, repeat:-1})
       this.anims.create({key:"dadoanim", frames: this.anims.generateFrameNumbers("dadoanimazao", {start:0, end:4}), duration: 500, repeat:0})
+      this.anims.create({key:"saltoteanim", frames: this.anims.generateFrameNumbers("saltoteanimazao", {start:0, end:1}), duration: 500, repeat:-1})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");
