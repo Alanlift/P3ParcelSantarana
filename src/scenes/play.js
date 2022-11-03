@@ -23,7 +23,7 @@ var scoreac;
 var sonid4; //Sonido dado d4
 var saltotesonido; //Sonido saltote
 var sonidorana;
-var gameOver;
+let gameOver = true;
 let coco = 4800;
 let player;
 // Clase Play, donde se crean todos los sprites, el escenario del juego y se inicializa y actualiza toda la logica del juego.
@@ -33,7 +33,6 @@ export class Play extends Phaser.Scene {
     super("Play");
   }
 
-  
   preload() {
       this.load.tilemapTiledJSON("tablero", "assets/tilemaps/tablero.json");
       this.load.image("tilesBelow", "assets/images/tablero_bg.png");
@@ -143,6 +142,8 @@ export class Play extends Phaser.Scene {
     scorejg3 = 10;
     this.Puntajes = [scorejg1, scorejg2, scorejg3];
     this.Siguiente = [1, 2, 0];
+    this.Cartulis = ["1","1","2","3","4","5","6","7","8","9","10","11","12","13","11","15","16",
+    "2","3","4","5","6","7","8","9","10","11","12","13","11","15","16","2","3","4","5","6","7","8","9"];
     this.JugadorTurno("Jugador 1");
 
     spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Dado'));
@@ -170,14 +171,15 @@ export class Play extends Phaser.Scene {
               this.scene.start("Victoria", { JTurno: JTurno });
             }, 3000);
             
-            gameOver = true;
           } else {
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
+            const flechuli = this.add.image(casPoint.x,casPoint.y,'flechuli').setScale(0.1);
             setTimeout(() => {
               Players[JTurno].play(animaciones[JTurno][0]);
               sonidoanimaciones[JTurno].play();
             }, 500);
             setTimeout(() => {
+              flechuli.visible = false;
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
               Players[JTurno].play(animaciones[JTurno][1]);
             }, 1000);
@@ -260,7 +262,6 @@ export class Play extends Phaser.Scene {
       sonidorana = this.sound.add('sonidorana');
       let musica = this.sound.add('tematab',{loop: true})
       musica.play();
-      gameOver = false;
   }
 
   update() {
@@ -372,7 +373,7 @@ export class Play extends Phaser.Scene {
       new CartaRo( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      '3',
+      this.Cartulis[NCarta],
       this,
       () => {this.roja()})
     }
@@ -380,7 +381,7 @@ export class Play extends Phaser.Scene {
       new CartaAm( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      '2',
+      this.Cartulis[NCarta],
       this,
       () => {this.amarilla(NCarta, pos)},() => { this.turno(),
       scoretext.setText(scoreac)})
@@ -389,7 +390,7 @@ export class Play extends Phaser.Scene {
       new CartaVe( //carta?
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      '1',
+      this.Cartulis[NCarta],
       this,
       () => {this.verde()})
     }

@@ -70,7 +70,7 @@ export class Preloads extends Phaser.Scene {
     });
     this.load.spritesheet('saltoteanimazao','assets/images/saltote2.png',{
     frameWidth: 1600,
-    frameHeight: 1200,
+    frameHeight: 800,
     });
     this.load.spritesheet('elsaltote1','assets/images/sapo1saltote.png',{
       frameWidth: 1069,
@@ -101,11 +101,23 @@ export class Preloads extends Phaser.Scene {
     this.load.image('Jugador 2','assets/images/turno2.png');
     this.load.image('Jugador 3','assets/images/turno3.png');
     this.load.image('ContMoscas','assets/images/moscas.png');
+    this.load.image('flechuli','assets/images/flecha.png');
     //Cartas
     this.load.image('1','assets/images/cartas/Verde1.png');
     this.load.image('2','assets/images/cartas/Amarilla1.png');
     this.load.image('3','assets/images/cartas/Roja1.png');
     this.load.image('4','assets/images/cartas/Verde2.png');
+    this.load.image('5','assets/images/cartas/Amarilla2.png');
+    this.load.image('6','assets/images/cartas/Roja2.png');
+    this.load.image('7','assets/images/cartas/Verde3.png');
+    this.load.image('8','assets/images/cartas/Amarilla3.png');
+    this.load.image('9','assets/images/cartas/Roja3.png');
+    this.load.image('10','assets/images/cartas/Verde4.png');
+    this.load.image('11','assets/images/cartas/Amarilla4.png');
+    this.load.image('12','assets/images/cartas/Roja4.png');
+    this.load.image('13','assets/images/cartas/Verde5.png');
+    this.load.image('15','assets/images/cartas/Roja5.png');
+    this.load.image('16','assets/images/cartas/Verde5.png');
     //BotonesCartas
     this.load.image('botonam1','assets/images/cartas/Boton1Amarilla.png');
     this.load.image('botonam2','assets/images/cartas/Boton2Amarilla.png');
@@ -143,7 +155,7 @@ export class Preloads extends Phaser.Scene {
       this.anims.create({key:"destpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:10, end:0}), duration: 1000, repeat:0})
       this.anims.create({key:"victoriarda", frames: this.anims.generateFrameNumbers("victoriafinal", {start:0, end:10}), duration: 2000, repeat:-1})
       this.anims.create({key:"dadoanim", frames: this.anims.generateFrameNumbers("dadoanimazao", {start:0, end:4}), duration: 500, repeat:0})
-      this.anims.create({key:"saltoteanim", frames: this.anims.generateFrameNumbers("saltoteanimazao", {start:0, end:1}), duration: 500, repeat:-1})
+      this.anims.create({key:"saltoteanim", frames: this.anims.generateFrameNumbers("saltoteanimazao", {start:0, end:1}), duration: 2000, repeat:-1})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");
