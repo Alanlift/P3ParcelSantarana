@@ -15,7 +15,7 @@ export class Ayuda2 extends Phaser.Scene {
         let spawnPoint = tablero.findObject("Botones", (obj) => obj.name == ('Ayuda'));
         this.add.image(this.cameras.main.centerX,
             this.cameras.main.centerY,
-                 'ayuda_bg').setScale(1);
+                 'ayuda2_bg').setScale(1);
         var cam = this.cameras.main;
         var targetScene = this.scene.get("Ayuda"); // sleeping
         var targetCam = targetScene.cameras.main;

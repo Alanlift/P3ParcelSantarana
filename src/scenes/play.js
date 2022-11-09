@@ -136,9 +136,9 @@ export class Play extends Phaser.Scene {
     proxcasjg3 = 0;
     this.Casillas = [proxcasjg1, proxcasjg2, proxcasjg3];
     scoreac = 0;
-    scorejg1 = 10;
-    scorejg2 = 20;
-    scorejg3 = 10;
+    scorejg1 = 0;
+    scorejg2 = 0;
+    scorejg3 = 0;
     this.Puntajes = [scorejg1, scorejg2, scorejg3];
     this.Siguiente = [1, 2, 0];
     this.Cartulis = ["1","1","2","3","4","5","6","7","8","9","10","11","12","13","11","15","16",
@@ -304,7 +304,7 @@ export class Play extends Phaser.Scene {
     roja(){
       let dado20 = this.d20()
       this.CartasRojas.conseguir().play('dado20anim');
-      this.imprimirD20(dado20, 1.65);
+      this.imprimirD20(dado20, 1.6);
       if (dado20 >= 10) {
         this.Puntajes[JTurno]+=10;
       } else {
@@ -337,7 +337,7 @@ export class Play extends Phaser.Scene {
     amarilla(proxcas, pos){
       let dado20 = this.d20()
       this.CartasAmarillas.conseguir().play('dado20anim');
-      this.imprimirD20(dado20, 1.46);
+      this.imprimirD20(dado20, 1.4);
       if (dado20 >= 8) {
         const numcas = parseInt(proxcas) + 2;
         let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
@@ -407,7 +407,7 @@ export class Play extends Phaser.Scene {
     }
     imprimirD20(DNum, dimensionY){
       setTimeout(() => {
-      this.d20texto = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY*dimensionY, DNum)
+      this.d20texto = this.add.text(this.cameras.main.centerX*0.985, this.cameras.main.centerY*dimensionY, DNum)
       .setStyle({ 
           backgroundColor: '#a879ff', fontSize: '50px', 
           fontFamily: 'Arial'

@@ -34,6 +34,7 @@ export class Preloads extends Phaser.Scene {
     this.load.image('tablero_bg','assets/images/tablero_bg.png');
     this.load.image('tablero_blur','assets/images/tablero_blur.png');
     this.load.image('ayuda_bg','assets/images/ayuda_bg.png');
+    this.load.image('ayuda2_bg','assets/images/ayuda2_bg.png');
     this.load.image('nubes_bg','assets/images/nubes.png');
     this.load.image('victoria_bg','assets/images/victoria_bg.png');
     //Casilla y pjs
@@ -102,6 +103,7 @@ export class Preloads extends Phaser.Scene {
     this.load.image('credit','assets/images/creditos.png');
     this.load.image('saltote','assets/images/saltote.png');
     this.load.image('dadoicon','assets/images/dado1.png');
+    this.load.image('dado20icon','assets/images/dado20.png');
     this.load.image('dadoclick','assets/images/dado2.png');
     this.load.image('tuerca','assets/images/tuerca.png');
     //HUD
