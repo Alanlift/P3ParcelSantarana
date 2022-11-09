@@ -676,6 +676,18 @@
                  "width":0,
                  "x":1498.67,
                  "y":903.333
+                }, 
+                {
+                 "height":0,
+                 "id":94,
+                 "name":"Humo",
+                 "point":true,
+                 "rotation":0,
+                 "type":"boton",
+                 "visible":true,
+                 "width":0,
+                 "x":463.848144952545,
+                 "y":223.641069887834
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -684,7 +696,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":94,
+ "nextobjectid":95,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

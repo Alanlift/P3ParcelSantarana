@@ -1,9 +1,9 @@
 import Button from "../js/button.js";
 // Clase Ayuda, donde se cambia el idioma del juego
-export class Ayuda extends Phaser.Scene {
+export class Ayuda2 extends Phaser.Scene {
     constructor() {
         // Se asigna una key para despues poder llamar a la escena
-        super("Ayuda")
+        super("Ayuda2")
     }
     preload(){
         this.load.tilemapTiledJSON("tablero", "public/assets/tilemaps/tablero.json");
@@ -17,38 +17,40 @@ export class Ayuda extends Phaser.Scene {
             this.cameras.main.centerY,
                  'ayuda_bg').setScale(1);
         var cam = this.cameras.main;
-        var targetScene = this.scene.get("Ayuda2"); // sleeping
+        var targetScene = this.scene.get("Ayuda"); // sleeping
         var targetCam = targetScene.cameras.main;
         var defaultWidth = this.cameras.default.width;
-                 
-        cam.setName("Ayuda");
-        const botonvolver = new Button(this.cameras.main.centerX*1.85,
+        cam.setName("Ayuda2");
+        const botonvolver = new Button(this.cameras.main.centerX*0.15,
             this.cameras.main.centerY, 'volver', this, () => {
                 this.scene.transition({
-                  target: "Ayuda2",
+                  target: "Ayuda",
                   sleep: true,
                   duration: 2000,
                   onUpdate: function (progress) {
                     const t = Phaser.Math.Easing.Quadratic.InOut(progress);
         
-                    cam.setViewport(0, 0, (1 - t) * defaultWidth, cam.height);
-                    cam.setScroll(t * defaultWidth, 0);
+                    cam.setViewport(
+                      t * defaultWidth,
+                      0,
+                      (1 - t) * defaultWidth,
+                      cam.height
+                    );
                     targetCam.setViewport(
-                        (1 - t) * defaultWidth,
-                        0,
-                        t * defaultWidth,
-                        targetCam.height
-                      );
-                    
+                      0,
+                      0,
+                      t * defaultWidth,
+                      targetCam.height
+                    );
+                    targetCam.setScroll((1 - t) * defaultWidth, 0);     
                   }
                 });
               })
-        botonvolver.conseguir().rotation = 3.15;
-        
-        const boton = new Button(spawnPoint.x, spawnPoint.y,
-              'ayuda', this, () => {
+        //const boton = new Button(spawnPoint.x, spawnPoint.y,
+          //    'ayuda', this, () => {
             // Instrucción volver a la escena Play
-            this.scene.switch("Play");
-        }); 
+            //this.scene.wake("Ayuda");
+            //this.scene.switch("Play");
+        //}); 
     }
 }

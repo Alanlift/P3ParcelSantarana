@@ -4,6 +4,7 @@ import { MainMenu } from "../scenes/mainmenu.js";
 import { Creditos } from "../scenes/creditos.js";
 import { Play } from "../scenes/play.js";
 import { Ayuda } from "../scenes/ayuda.js";
+import { Ayuda2 } from "../scenes/ayuda2.js";
 import { Opcion } from "../scenes/opcion.js";
 import { Victoria} from "../scenes/victoria.js";
 const config = {
@@ -29,7 +30,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preloads, MainMenu, Creditos, Play, Opcion, Ayuda, Victoria], // Listado de todas las escenas del juego, en orden
+  scene: [Preloads, MainMenu, Creditos, Play, Opcion, Ayuda, Ayuda2, Victoria], // Listado de todas las escenas del juego, en orden
   // La primera escena es con la cual empieza el juego
 };
 

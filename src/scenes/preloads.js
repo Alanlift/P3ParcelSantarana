@@ -64,7 +64,11 @@ export class Preloads extends Phaser.Scene {
       frameWidth: 1000,
       frameHeight: 1000,
     });
-    this.load.spritesheet("dadoanimazao", "assets/images/dadoanimazao.png", {
+    this.load.spritesheet("dado4animazao", "assets/images/dado4animazao.png", {
+      frameWidth: 1000,
+      frameHeight: 1000,
+    });
+    this.load.spritesheet("dado20animazao", "assets/images/dado20animazao.png", {
       frameWidth: 1000,
       frameHeight: 1000,
     });
@@ -83,6 +87,10 @@ export class Preloads extends Phaser.Scene {
     this.load.spritesheet('elsaltote3','assets/images/sapo3saltote.png',{
       frameWidth: 1069,
       frameHeight: 2427,
+    });
+    this.load.spritesheet("humoanimazao", "assets/images/humoanimazao.png", {
+      frameWidth: 701,
+      frameHeight: 397,
     });
 
     this.load.image('vacio','assets/images/casillerovacio.png') //Vacio tuki
@@ -154,8 +162,10 @@ export class Preloads extends Phaser.Scene {
       this.anims.create({key:"tpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:0, end:10}), duration: 1000, repeat:0})
       this.anims.create({key:"destpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:10, end:0}), duration: 1000, repeat:0})
       this.anims.create({key:"victoriarda", frames: this.anims.generateFrameNumbers("victoriafinal", {start:0, end:10}), duration: 2000, repeat:-1})
-      this.anims.create({key:"dadoanim", frames: this.anims.generateFrameNumbers("dadoanimazao", {start:0, end:4}), duration: 500, repeat:0})
+      this.anims.create({key:"dadoanim", frames: this.anims.generateFrameNumbers("dado4animazao", {start:0, end:4}), duration: 500, repeat:0})
+      this.anims.create({key:"dado20anim", frames: this.anims.generateFrameNumbers("dado20animazao", {start:0, end:4}), duration: 500, repeat:0})
       this.anims.create({key:"saltoteanim", frames: this.anims.generateFrameNumbers("saltoteanimazao", {start:0, end:1}), duration: 2000, repeat:-1})
+      this.anims.create({key:"humoanim", frames: this.anims.generateFrameNumbers("humoanimazao", {start:0, end:1}), duration: 1000, repeat:-1})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
       this.scene.start("MainMenu");

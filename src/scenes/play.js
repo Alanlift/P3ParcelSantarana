@@ -5,24 +5,24 @@ import CartaVe from "../js/cartasve.js";
 import CartaRo from "../js/cartasro.js";
 import CartaAm from "../js/cartasam.js";
 //Variables de la escena
-var JTurno; //Para que funcione el movimiento
-var CTurno; //Para que funcione el score
-var proxcas;
+let JTurno; //Para que funcione el movimiento
+let CTurno; //Para que funcione el score
+let proxcas;
 let proxcasjg1;
 let proxcasjg2;
 let proxcasjg3;
-var CasRojas;
-var CasVerdes;
-var CasAmar;
+let CasRojas;
+let CasVerdes;
+let CasAmar;
 //Scores
 let scorejg1;
 let scorejg2;
 let scorejg3;
-var scoretext;
-var scoreac;
-var sonid4; //Sonido dado d4
-var saltotesonido; //Sonido saltote
-var sonidorana;
+let scoretext;
+let scoreac;
+let sonid4; //Sonido dado d4
+let saltotesonido; //Sonido saltote
+let sonidorana;
 let gameOver = true;
 let coco = 4800;
 let player;
@@ -32,7 +32,6 @@ export class Play extends Phaser.Scene {
     // Se asigna una key para despues poder llamar a la escena
     super("Play");
   }
-
   preload() {
       this.load.tilemapTiledJSON("tablero", "assets/tilemaps/tablero.json");
       this.load.image("tilesBelow", "assets/images/tablero_bg.png");
@@ -120,7 +119,7 @@ export class Play extends Phaser.Scene {
     let Casillas = [CasRojas, CasVerdes, CasAmar];
     //Agregamos collider con el tablero
     this.physics.add.collider(Players, worldLayer);
-    this.physics.add.collider(Casillas, worldLayer);
+    this.physics.add.collider(Casillas, worldLayer); //Ojo acá CASILLAS
 
     //Agregamos overlap las casillas
     //this.physics.add.overlap(Players, Casillas, this.Casilla(proxcas), null, this);
@@ -153,11 +152,17 @@ export class Play extends Phaser.Scene {
       "dadoicon",
       this,
       () => {
+          this.BotonSalto.detener()
           this.BotonDado.conseguir().play('dadoanim');
           sonid4.play();
           sonidorana.play();
+          if (this.Casillas[JTurno] == 0){
+            this.posac = this.tablero.findObject("Players", (obj) => obj.type == ('sapo'+[JTurno]));
+          } else {
+            this.posac = this.tablero.findObject("Objetos", (obj) => obj.type == (this.Casillas[JTurno]).toString());
+          }
           let randomNumber = Math.floor(Math.random()*4) + 1;
-          this.Dado(randomNumber);
+          this.imprimirD4(randomNumber);
           this.Casillas[JTurno] += randomNumber;
           proxcas = this.Casillas[JTurno];
           
@@ -172,8 +177,12 @@ export class Play extends Phaser.Scene {
             }, 3000);
             
           } else {
+            let flechuli = this.add.image(this.posac.x,this.posac.y,'flechuli').setScale(0.1);
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
-            const flechuli = this.add.image(casPoint.x,casPoint.y,'flechuli').setScale(0.1);
+            setTimeout(() => {
+              flechuli.setPosition(casPoint.x,casPoint.y);
+            }, 500);
+            
             setTimeout(() => {
               Players[JTurno].play(animaciones[JTurno][0]);
               sonidoanimaciones[JTurno].play();
@@ -186,7 +195,6 @@ export class Play extends Phaser.Scene {
             setTimeout(() => {
               Players[JTurno].stop();
               this.Casilla(proxcas, Players[JTurno]);
-              console.log("Jugador " + JTurno + ": " + this.Puntajes[JTurno]);
               Players[JTurno].setTexture('sapo'+ JTurno);
               this.BotonDado.conseguir().stop();
               this.BotonDado.cambiar('dadoicon');
@@ -194,7 +202,6 @@ export class Play extends Phaser.Scene {
           }
       });
       this.BotonDado.achicar(0.2);
-      let posac;
       spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Saltote'));
       this.BotonSalto = new Dice( //Lanzar saltote
       spawnPoint.x,
@@ -202,7 +209,7 @@ export class Play extends Phaser.Scene {
       'saltote',
       this,
       () => {
-          if (scoreac>=20 && proxcas+8<40)
+          if (scoreac>=20 && proxcas+8<=40)
           {
             saltotesonido.play();
             let posac = this.tablero.findObject("Objetos", (obj) => obj.type == (this.Casillas[JTurno]).toString());
@@ -223,7 +230,6 @@ export class Play extends Phaser.Scene {
               Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
               Players[JTurno].stop();
               this.Casilla(proxcas, Players[JTurno]);
-              console.log("Jugador " + JTurno + ": " + this.Puntajes[JTurno]);
               Players[JTurno].setTexture('sapo'+ JTurno);
             }, 3000);
           }
@@ -232,7 +238,7 @@ export class Play extends Phaser.Scene {
 
       spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Score'));
       this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
-      scoretext = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.60, "", { //Texto Score
+      scoretext = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.60, "0", { //Texto Score
         fontSize: "36px",
         // @ts-ignore
         fill: "#000000",
@@ -254,9 +260,14 @@ export class Play extends Phaser.Scene {
        "ayuda",
       this,
       () => {
-        this.scene.switch("Ayuda");
+          this.scene.switch('Ayuda');
       });
+    
+    spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Humo'));
+    const humo = this.add.sprite(spawnPoint.x, spawnPoint.y,'vacio').setScale(0.5);
+    humo.play('humoanim');
 
+    //Sonidos
       sonid4 = this.sound.add('dado');
       saltotesonido = this.sound.add('saltotesonido');
       sonidorana = this.sound.add('sonidorana');
@@ -270,7 +281,7 @@ export class Play extends Phaser.Scene {
     if (coco<-3000){
       coco = 4800;
     }
-    if (scoreac>=20)
+    if (scoreac>=20 && proxcas+8<=40) 
       {
         this.BotonSalto.conseguir().play('saltoteanim');
       } else {
@@ -291,43 +302,68 @@ export class Play extends Phaser.Scene {
       }
 
     roja(){
-      if (this.d20() >= 10) {
+      let dado20 = this.d20()
+      this.CartasRojas.conseguir().play('dado20anim');
+      this.imprimirD20(dado20, 1.65);
+      if (dado20 >= 10) {
         this.Puntajes[JTurno]+=10;
-        scoreac = this.Puntajes[this.Siguiente[JTurno]];
       } else {
         this.Puntajes[JTurno]-=10;
-        scoreac = this.Puntajes[this.Siguiente[JTurno]];
       }
-      this.turno();
-      scoretext.setText(scoreac);
-      this.moscatext.setStyle({backgroundColor: '',fill: "" });
+      setTimeout(() => {
+        scoretext.setText(this.Puntajes[JTurno]);
+        this.d20texto.setStyle({backgroundColor: '',fill: "" });
+        this.CartasRojas.desaparecer();
+        }, 1000);
+      scoreac = this.Puntajes[this.Siguiente[JTurno]];
+      this.d4texto.setStyle({backgroundColor: '',fill: "" });
+      setTimeout(() => {
+        this.turno();
+        scoretext.setText(scoreac);
+        }, 2000);
     }
 
     verde(){
-        this.Puntajes[JTurno]+=5;
-        scoreac = this.Puntajes[this.Siguiente[JTurno]];
+      this.Puntajes[JTurno]+=5;
+      scoretext.setText(this.Puntajes[JTurno]);
+      scoreac = this.Puntajes[this.Siguiente[JTurno]];
+      this.d4texto.setStyle({backgroundColor: '',fill: "" });
+      setTimeout(() => {
         this.turno();
         scoretext.setText(scoreac);
-        this.moscatext.setStyle({backgroundColor: '',fill: "" });
+      }, 2000);
     }
 
     amarilla(proxcas, pos){
-      if (this.d20() >= 8) {
+      let dado20 = this.d20()
+      this.CartasAmarillas.conseguir().play('dado20anim');
+      this.imprimirD20(dado20, 1.46);
+      if (dado20 >= 8) {
         const numcas = parseInt(proxcas) + 2;
         let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
-        pos.setPosition(casPoint.x+1, casPoint.y+1);
-        this.Casillas[JTurno] +=2;
-        scoreac = this.Puntajes[this.Siguiente[JTurno]];
+        setTimeout(() => {
+          pos.setPosition(casPoint.x+1, casPoint.y+1);
+          this.Casillas[JTurno] +=2;
+          this.d20texto.setStyle({backgroundColor: '',fill: "" });
+          this.CartasAmarillas.desaparecer();
+          }, 1000);
       } else {
         const numcas = parseInt(proxcas) - 2;
         let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (numcas.toString()));
-        pos.setPosition(casPoint.x+1, casPoint.y+1);
-        this.Casillas[JTurno] -=2;
-        scoreac = this.Puntajes[this.Siguiente[JTurno]];
+        setTimeout(() => {
+          pos.setPosition(casPoint.x+1, casPoint.y+1);
+          this.Casillas[JTurno] -=2;
+          this.d20texto.setStyle({backgroundColor: '',fill: "" });
+          this.CartasAmarillas.desaparecer();
+          }, 1000);
       }
-      this.turno();
-      scoretext.setText(scoreac);
-      this.moscatext.setStyle({backgroundColor: '',fill: "" });
+      scoretext.setText(this.Puntajes[JTurno]);
+      scoreac = this.Puntajes[this.Siguiente[JTurno]];
+      this.d4texto.setStyle({backgroundColor: '',fill: "" });
+      setTimeout(() => {
+        this.turno();
+        scoretext.setText(scoreac);
+      }, 2000);
     }
 
     turno(){
@@ -360,17 +396,25 @@ export class Play extends Phaser.Scene {
       }
       
     }
-
-    Dado(DNum){
+    //Dados a imprimir
+    imprimirD4(DNum){
       setTimeout(() => {
-      this.moscatext = this.add.text(this.cameras.main.centerX*1.45, this.cameras.main.centerY*1.72, DNum)
+      this.d4texto = this.add.text(this.cameras.main.centerX*1.45, this.cameras.main.centerY*1.72, DNum)
       .setStyle({ 
           backgroundColor: '#a879ff', fontSize: '50px', 
           fontFamily: 'Arial'
-      })}, 500);;
+      })}, 500);
+    }
+    imprimirD20(DNum, dimensionY){
+      setTimeout(() => {
+      this.d20texto = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY*dimensionY, DNum)
+      .setStyle({ 
+          backgroundColor: '#a879ff', fontSize: '50px', 
+          fontFamily: 'Arial'
+      })}, 500);
     }
     CartaRoja(NCarta){
-      new CartaRo( //carta?
+      this.CartasRojas = new CartaRo( 
       this.cameras.main.centerX,
       this.cameras.main.centerY,
       this.Cartulis[NCarta],
@@ -378,16 +422,16 @@ export class Play extends Phaser.Scene {
       () => {this.roja()})
     }
     CartaAmarilla(NCarta, pos){
-      new CartaAm( //carta?
+      this.CartasAmarillas = new CartaAm( 
       this.cameras.main.centerX,
       this.cameras.main.centerY,
       this.Cartulis[NCarta],
       this,
-      () => {this.amarilla(NCarta, pos)},() => { this.turno(),
-      scoretext.setText(scoreac)})
+      () => {this.amarilla(NCarta, pos)},() => { scoreac = this.Puntajes[this.Siguiente[JTurno]],
+      scoretext.setText(scoreac), this.d4texto.setStyle({backgroundColor: '',fill: "" }), this.CartasAmarillas.desaparecer(), this.turno()})
     }
     CartaVerde(NCarta){
-      new CartaVe( //carta?
+      new CartaVe( 
       this.cameras.main.centerX,
       this.cameras.main.centerY,
       this.Cartulis[NCarta],

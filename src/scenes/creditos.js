@@ -26,12 +26,11 @@ export class Creditos extends Phaser.Scene {
             juan.play();
         });
         let juli = this.sound.add('alan');
-        const imgjuli = new Button(this.cameras.main.centerX*1.43, //Juli
+        new Button(this.cameras.main.centerX*1.43, //Juli
              this.cameras.main.centerY*1.20,
              'julipp', this, () => {
             juli.play();
         });
-        imgjuli.achicar(0.6);
         let alan = this.sound.add('alan');
         new Button(this.cameras.main.centerX*1.43, //Alan
              this.cameras.main.centerY*0.50,
