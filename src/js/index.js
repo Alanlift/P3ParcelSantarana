@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser from "phaser";
 import { Preloads } from "../scenes/preloads.js";
 import { MainMenu } from "../scenes/mainmenu.js";
 import { Creditos } from "../scenes/creditos.js";
@@ -6,7 +6,7 @@ import { Play } from "../scenes/play.js";
 import { Ayuda } from "../scenes/ayuda.js";
 import { Ayuda2 } from "../scenes/ayuda2.js";
 import { Opcion } from "../scenes/opcion.js";
-import { Victoria} from "../scenes/victoria.js";
+import { Victoria } from "../scenes/victoria.js";
 const config = {
   type: Phaser.AUTO,
   width: 1600,
