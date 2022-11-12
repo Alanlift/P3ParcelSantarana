@@ -10,7 +10,7 @@ class CartaAm {
         .setScale(0.5)),
       (this.daduli = scene.add
         .sprite(x * 1, y * 1.46, "dado20icon")
-        .setScale(0.2)
+        .setScale(0.18)
         .setInteractive({ useHandCursor: true })
         .on("pointerdown", () => this.desactivar(callback1))),
       (this.boton3 = scene.add
