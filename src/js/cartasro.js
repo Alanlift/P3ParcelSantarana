@@ -9,7 +9,7 @@ class CartaRo {
         .setScale(0.5)),
       (this.daduli = scene.add
         .sprite(x * 1, y * 1.65, "dado20icon")
-        .setScale(0.2)
+        .setScale(0.18)
         .setInteractive({ useHandCursor: true })
         .on("pointerdown", () => this.desactivar(callback1)));
   }
