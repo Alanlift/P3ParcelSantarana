@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import Button from "../js/button.js";
 // Clase Ayuda, donde se cambia el idioma del juego
 export class Ayuda2 extends Phaser.Scene {

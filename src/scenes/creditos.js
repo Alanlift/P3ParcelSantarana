@@ -12,7 +12,7 @@ export class Creditos extends Phaser.Scene {
     // Boton para volver
     const botonmenu = this.sound.add("botonmenuson");
     this.add
-      .image(this.cameras.main.centerX, this.cameras.main.centerY, "custom_bg")
+      .image(this.cameras.main.centerX, this.cameras.main.centerY, "creditos_bg")
       .setScale(1.1);
     const boton = new Button(
       this.cameras.main.centerX * 0.15,

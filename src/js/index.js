@@ -7,6 +7,7 @@ import { Ayuda } from "../scenes/ayuda.js";
 import { Ayuda2 } from "../scenes/ayuda2.js";
 import { Opcion } from "../scenes/opcion.js";
 import { Victoria } from "../scenes/victoria.js";
+import { Configuracion } from "../scenes/configuracion.js";
 const config = {
   type: Phaser.AUTO,
   width: 1600,
@@ -30,7 +31,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preloads, MainMenu, Creditos, Play, Opcion, Ayuda, Ayuda2, Victoria], // Listado de todas las escenas del juego, en orden
+  scene: [Preloads, MainMenu, Configuracion, Creditos, Play, Opcion, Ayuda, Ayuda2, Victoria], // Listado de todas las escenas del juego, en orden
   // La primera escena es con la cual empieza el juego
 };
 
