@@ -14,6 +14,8 @@ export class Victoria extends Phaser.Scene {
     JTurno = data.JTurno;
   }
   create() {
+    const musica = this.sound.add('temamen',{loop: true})
+    const botonmenu = this.sound.add('botonmenuson');
     const victoria = this.sound.add("victoria");
     victoria.play();
     this.add.image(
@@ -31,6 +33,17 @@ export class Victoria extends Phaser.Scene {
       this.Ganador("GANASTE " + "Jugador 3");
       this.JugadorTurno("Jugador 3");
     }
+    const boton = new Button(
+      this.cameras.main.centerX * 0.15,
+      this.cameras.main.centerY,
+      "volver",
+      this,
+      () => {
+        botonmenu.play();
+        this.scene.start("MainMenu");
+        musica.play();
+      }
+    );
   }
 
   JugadorTurno(Turno) {
