@@ -15,9 +15,10 @@ export class Preloads extends Phaser.Scene {
     this.load.audio('tematab','assets/sounds/CancionTablero.mp3');
     this.load.audio('temamen','assets/sounds/CancionMenu.mp3');
     this.load.audio('victoria','assets/sounds/victoria.wav');
-    this.load.audio('alan','assets/sounds/alansonido.mp3');
-    this.load.audio('cabra','assets/sounds/cabrasonido.mp3');
-    this.load.audio('juan','assets/sounds/juansonido.mp3');
+    this.load.audio('alanson','assets/sounds/alansonido.mp3');
+    this.load.audio('cabrason','assets/sounds/cabrasonido.mp3');
+    this.load.audio('juanson','assets/sounds/juansonido.mp3');
+    this.load.audio('julison','assets/sounds/julisonido.mp3');
     this.load.audio('botonmenuson','assets/sounds/boton_de_menu.wav');
     this.load.audio('tp1son','assets/sounds/TP_1.wav');
     this.load.audio('tp2son','assets/sounds/TP_2.wav');
@@ -27,6 +28,7 @@ export class Preloads extends Phaser.Scene {
     this.load.image('juanpp','assets/images/juanpp.png');
     this.load.image('cabrapp','assets/images/cabrapp.png');
     this.load.image('julipp','assets/images/julipp.png');
+    this.load.image('unrafpp','assets/images/unrafpp.png');
     //Backgrounds
     this.load.image('carga_bg','assets/images/carga_bg.png');
     this.load.image('menu_bg','assets/images/menu_bg.png');

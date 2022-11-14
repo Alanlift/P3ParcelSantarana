@@ -142,7 +142,7 @@ export class Play extends Phaser.Scene {
     this.Puntajes = [scorejg1, scorejg2, scorejg3];
     this.Siguiente = [1, 2, 0];
     this.Cartulis = ["1","1","2","3","4","5","6","7","8","9","10","11","12","13","11","15","16",
-    "2","3","4","5","6","7","8","9","10","11","12","13","11","15","16","2","3","4","5","6","7","8","9"];
+    "2","3","4","5","6","7","8","9","10","11","12","13","11","15","16","2","3","4","5","6","7","8","9","10"];
     this.JugadorTurno("Jugador 1");
 
     spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Dado'));
@@ -242,7 +242,7 @@ export class Play extends Phaser.Scene {
         fontSize: "36px",
         // @ts-ignore
         fill: "#000000",
-        fontFamily: 'Arial'
+        fontFamily: 'Century Gothic'
       });
 
     new Button( //Opciones
@@ -402,15 +402,15 @@ export class Play extends Phaser.Scene {
       this.d4texto = this.add.text(this.cameras.main.centerX*1.45, this.cameras.main.centerY*1.72, DNum)
       .setStyle({ 
           backgroundColor: '#a879ff', fontSize: '50px', 
-          fontFamily: 'Arial'
+          fontFamily: 'Century Gothic'
       })}, 500);
     }
     imprimirD20(DNum, dimensionY){
       setTimeout(() => {
-      this.d20texto = this.add.text(this.cameras.main.centerX*0.985, this.cameras.main.centerY*dimensionY, DNum)
+      this.d20texto = this.add.text(this.cameras.main.centerX*0.984, this.cameras.main.centerY*dimensionY, DNum)
       .setStyle({ 
           backgroundColor: '#a879ff', fontSize: '50px', 
-          fontFamily: 'Arial'
+          fontFamily: 'Century Gothic'
       })}, 500);
     }
     CartaRoja(NCarta){

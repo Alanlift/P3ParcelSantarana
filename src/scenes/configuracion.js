@@ -24,7 +24,7 @@ export class Configuracion extends Phaser.Scene {
             this.scene.switch("MainMenu");
           }
         );
-        let juan = this.sound.add("juan");
+        let juan = this.sound.add("juanson");
         const Argentina = new ButtonFont(
           this.cameras.main.centerX * 0.7, //Argentina
           this.cameras.main.centerY,
@@ -35,7 +35,7 @@ export class Configuracion extends Phaser.Scene {
           }
         );
         Argentina.style().setStyle({backgroundColor: '', fontSize: '200px'});
-        let cabra = this.sound.add("cabra");
+        let cabra = this.sound.add("cabrason");
         const Estadosunidos = new ButtonFont(
             this.cameras.main.centerX * 1.3, //Estados Unidos
             this.cameras.main.centerY,

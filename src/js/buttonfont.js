@@ -5,10 +5,10 @@ class ButtonFont {
             .setOrigin(0.5)
             .setPadding(10)
             .setStyle({ 
-                backgroundColor: '#71af45', 
+                backgroundColor: '#571d05', 
                 fontSize: '50px', 
                 fill: '#000000', 
-                fontFamily: 'Arial'
+                fontFamily: 'Century Gothic'
             })
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => callback())

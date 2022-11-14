@@ -13,7 +13,7 @@ export class Creditos extends Phaser.Scene {
     const botonmenu = this.sound.add("botonmenuson");
     this.add
       .image(this.cameras.main.centerX, this.cameras.main.centerY, "creditos_bg")
-      .setScale(1.1);
+      .setScale(1);
     const boton = new Button(
       this.cameras.main.centerX * 0.15,
       this.cameras.main.centerY,
@@ -24,45 +24,59 @@ export class Creditos extends Phaser.Scene {
         this.scene.switch("MainMenu");
       }
     );
-    let juan = this.sound.add("juan");
-    new Button(
-      this.cameras.main.centerX * 0.7, //Juan
-      this.cameras.main.centerY * 0.5,
+    let juan = this.sound.add("juanson");
+    const botonjuan = new Button(
+      this.cameras.main.centerX * 0.53, //Juan
+      this.cameras.main.centerY * 0.55,
       "juanpp",
       this,
       () => {
         juan.play();
       }
     );
-    let juli = this.sound.add("alan");
-    new Button(
-      this.cameras.main.centerX * 1.43, //Juli
-      this.cameras.main.centerY * 1.2,
+    let juli = this.sound.add("julison");
+    const botonjuli = new Button(
+      this.cameras.main.centerX * 1.4, //Juli
+      this.cameras.main.centerY * 1.19,
       "julipp",
       this,
       () => {
         juli.play();
       }
     );
-    let alan = this.sound.add("alan");
-    new Button(
-      this.cameras.main.centerX * 1.43, //Alan
-      this.cameras.main.centerY * 0.5,
+    let alan = this.sound.add("alanson");
+    const botonalan = new Button(
+      this.cameras.main.centerX * 1.4, //Alan
+      this.cameras.main.centerY * 0.55,
       "alanpp",
       this,
       () => {
         alan.play();
       }
     );
-    let cabra = this.sound.add("cabra");
-    new Button(
-      this.cameras.main.centerX * 0.7, //Cabra
-      this.cameras.main.centerY * 1.2,
+    let cabra = this.sound.add("cabrason");
+    const botoncabra = new Button(
+      this.cameras.main.centerX * 0.53, //Cabra
+      this.cameras.main.centerY * 1.19,
       "cabrapp",
       this,
       () => {
         cabra.play();
       }
     );
+    const botonunraf = new Button(
+      this.cameras.main.centerX, //Cabra
+      this.cameras.main.centerY,
+      "unrafpp",
+      this,
+      () => {
+        window.open('https://www.unraf.edu.ar/');
+      }
+    );
+    botonunraf.achicar(0.9);
+    botonjuan.achicar(0.9);
+    botonjuli.achicar(0.9);
+    botonalan.achicar(0.9);
+    botoncabra.achicar(0.9);
   }
 }
