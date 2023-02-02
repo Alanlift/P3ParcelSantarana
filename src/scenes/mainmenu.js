@@ -22,8 +22,12 @@ export class MainMenu extends Phaser.Scene {
         new Button(this.cameras.main.centerX, //Boton Play
              this.cameras.main.centerY + this.cameras.main.centerY/3, 'play', this, () => {
                 this.sound.stopAll(),
-                botonmenu.play(),
-                this.scene.start("Play")
+                botonmenu.play();
+                if(this.scene.isActive('Interfaz')) {
+                    this.scene.stop('Interfaz');
+                    console.log("era eso");
+                } else {console.log("no era eso xd")}
+                this.scene.start("Play");
         });
         new Button(this.cameras.main.centerX + this.cameras.main.centerX/1.7, //Boton Creditos
             this.cameras.main.centerY + this.cameras.main.centerY/3, 'credit', this, () => {

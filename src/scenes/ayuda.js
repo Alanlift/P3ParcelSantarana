@@ -58,6 +58,7 @@ export class Ayuda extends Phaser.Scene {
 
     const boton = new Button(spawnPoint.x, spawnPoint.y, "ayuda", this, () => {
       // Instrucción volver a la escena Play
+      this.scene.wake('Interfaz');
       this.scene.switch("Play");
     });
   }
