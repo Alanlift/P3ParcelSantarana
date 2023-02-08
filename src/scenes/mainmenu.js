@@ -7,6 +7,10 @@ export class MainMenu extends Phaser.Scene {
         super("MainMenu")
     }
 
+    init({ language }){
+        this.language = language;
+    }
+
     create() {
         // Boton para comenzar a personalizar
         const botonmenu = this.sound.add('botonmenuson'); 
@@ -16,23 +20,20 @@ export class MainMenu extends Phaser.Scene {
         new Button(this.cameras.main.centerX - this.cameras.main.centerX/1.7, //Boton Config
              this.cameras.main.centerY + this.cameras.main.centerY/3, 'config', this,
               () => {
-                botonmenu.play();
+                botonmenu.play(),
+                { language: this.language }
                 this.scene.switch("Configuracion");
              });
         new Button(this.cameras.main.centerX, //Boton Play
              this.cameras.main.centerY + this.cameras.main.centerY/3, 'play', this, () => {
                 this.sound.stopAll(),
                 botonmenu.play();
-                if(this.scene.isActive('Interfaz')) {
-                    this.scene.stop('Interfaz');
-                    console.log("era eso");
-                } else {console.log("no era eso xd")}
                 this.scene.start("Play");
         });
         new Button(this.cameras.main.centerX + this.cameras.main.centerX/1.7, //Boton Creditos
             this.cameras.main.centerY + this.cameras.main.centerY/3, 'credit', this, () => {
-                botonmenu.play();
-                this.scene.switch("Creditos");
+                botonmenu.play(),
+                this.scene.start("Creditos");
         });
     }
 }

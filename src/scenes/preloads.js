@@ -1,13 +1,15 @@
 // Clase Preloads, para separar los peloads y tener mejor orden
 import Phaser from 'phaser';
+import { ES_AR } from '../enums/lenguajes';
+import { getTranslations } from "../services/traducciones";
 export class Preloads extends Phaser.Scene {
-  // Se extiende de Phaser.Scene porque es una escena
   constructor() {
-    // Se asigna una key para despues poder llamar a la escena
     super("Preloads");
   }
 
   preload() {
+    //Lenguaje
+    this.language = getTranslations(ES_AR);
     //Sonidos
     this.load.audio('dado','assets/sounds/Dado.mp3');
     this.load.audio('saltotesonido','assets/sounds/saltotesonido.mp3');
@@ -23,6 +25,10 @@ export class Preloads extends Phaser.Scene {
     this.load.audio('tp1son','assets/sounds/TP_1.wav');
     this.load.audio('tp2son','assets/sounds/TP_2.wav');
     this.load.audio('tp3son','assets/sounds/TP_3.wav');
+    this.load.audio('carta1son','assets/sounds/carta1.wav');
+    this.load.audio('carta2son','assets/sounds/carta2.wav');
+    this.load.audio('cartamalson','assets/sounds/cartamal.wav');
+    this.load.audio('cartabienson','assets/sounds/cartabien.wav');
     //Fotos
     this.load.image('alanpp','assets/images/alanpp.png');
     this.load.image('juanpp','assets/images/juanpp.png');
@@ -154,18 +160,18 @@ export class Preloads extends Phaser.Scene {
            fontFamily: 'Arial'
        })
       //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
-      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 1000, repeat:0})
-      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 1000, repeat:0})
+      this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 900, repeat:0})
+      this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 900, repeat:0})
       this.anims.create({key:"saltote1", frames: this.anims.generateFrameNumbers("elsaltote1", {start:9, end:0}), duration: 500, repeat:0})
       this.anims.create({key:"dessaltote1", frames: this.anims.generateFrameNumbers("elsaltote1", {start:0, end:9}), duration: 500, repeat:0})
       this.anims.create({key:"saltote2", frames: this.anims.generateFrameNumbers("elsaltote2", {start:9, end:0}), duration: 500, repeat:0})
       this.anims.create({key:"dessaltote2", frames: this.anims.generateFrameNumbers("elsaltote2", {start:0, end:9}), duration: 500, repeat:0})
       this.anims.create({key:"saltote3", frames: this.anims.generateFrameNumbers("elsaltote3", {start:9, end:0}), duration: 500, repeat:0})
       this.anims.create({key:"dessaltote3", frames: this.anims.generateFrameNumbers("elsaltote3", {start:0, end:9}), duration: 500, repeat:0})
-      this.anims.create({key:"tpfrog2", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 1000, repeat:0})
-      this.anims.create({key:"destpfrog2", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 1000, repeat:0})
-      this.anims.create({key:"tpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:0, end:10}), duration: 1000, repeat:0})
-      this.anims.create({key:"destpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:10, end:0}), duration: 1000, repeat:0})
+      this.anims.create({key:"tpfrog2", frames: this.anims.generateFrameNumbers("tp", {start:0, end:10}), duration: 900, repeat:0})
+      this.anims.create({key:"destpfrog2", frames: this.anims.generateFrameNumbers("destp", {start:0, end:10}), duration: 900, repeat:0})
+      this.anims.create({key:"tpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:0, end:10}), duration: 900, repeat:0})
+      this.anims.create({key:"destpfrog3", frames: this.anims.generateFrameNumbers("tp3", {start:10, end:0}), duration: 900, repeat:0})
       this.anims.create({key:"victoriarda", frames: this.anims.generateFrameNumbers("victoriafinal", {start:0, end:10}), duration: 2000, repeat:-1})
       this.anims.create({key:"dadoanim", frames: this.anims.generateFrameNumbers("dado4animazao", {start:0, end:4}), duration: 500, repeat:0})
       this.anims.create({key:"dado20anim", frames: this.anims.generateFrameNumbers("dado20animazao", {start:0, end:4}), duration: 500, repeat:0})
@@ -173,7 +179,8 @@ export class Preloads extends Phaser.Scene {
       this.anims.create({key:"humoanim", frames: this.anims.generateFrameNumbers("humoanimazao", {start:0, end:1}), duration: 1000, repeat:-1})
       // Se agrega un timer y luego a la escena del menú principal
     setTimeout(() => {
-      this.scene.start("MainMenu");
+      this.scene.start("MainMenu"),
+      { language: this.language },
       musica.play();
     }, 3000);
   }

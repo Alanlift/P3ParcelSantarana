@@ -7,14 +7,14 @@ class Button {
       .setInteractive({ useHandCursor: true })
       .on("pointerdown", () => this.desactivar(callback));
   }
-  desactivar(callback) {
+  desactivar(callback) {// Fijarse lo de disable interactive causa error
+    // this.boton.disableInteractive();
+    // this.boton.alpha = 0.5;
+    // setTimeout(() => {
+    //   this.boton.alpha = 1;
+    //   this.boton.setInteractive({ useHandCursor: true });
+    // }, 3000);
     callback();
-    this.boton.disableInteractive();
-    this.boton.alpha = 0.5;
-    setTimeout(() => {
-      this.boton.alpha = 1;
-      this.boton.setInteractive({ useHandCursor: true });
-    }, 3000);
   }
   achicar(valor) {
     this.boton.setScale(valor);

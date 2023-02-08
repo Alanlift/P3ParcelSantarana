@@ -2,15 +2,11 @@ import Phaser from 'phaser';
 import Button from "../js/button.js";
 import Dice from "../js/dice.js";
 import compartirInstancia from './EventCenter.js';
-import CartaVe from "../js/cartasve.js";
-import CartaRo from "../js/cartasro.js";
-import CartaAm from "../js/cartasam.js";
 //Variables de la escena
 let JTurno; //Para que funcione el movimiento
 let proxcas;
 let casillasTiled;
 //Scores
-let scoretext;
 let puntajeAc;
 let sonid4; //Sonido dado d4
 let saltotesonido; //Sonido saltote
@@ -24,15 +20,10 @@ export class Play extends Phaser.Scene {
   preload() {
       this.load.tilemapTiledJSON("tablero", "assets/tilemaps/tablero.json");
       this.load.image("tilesBelow", "assets/images/tablero_bg.png");
-      //this.load.image("tilesPlatform", "public/assets/images/platformas.png");
-      this.events.emit('averga', this.papu);
-      const gameplay = this.scene.get('Interfaz');
 
   }
 
   create() {
-    this.papu = 0;
-
     this.parallax = this.add.image(coco, 100, 'nubes_bg');
     const animaciones = [["desfrog", "sfrog","saltote1","dessaltote1"],
     ["tpfrog2", "destpfrog2", "saltote2", "dessaltote2"],
@@ -46,18 +37,11 @@ export class Play extends Phaser.Scene {
       "tablero_bg",
       "tilesBelow"
     );
-    //const tilesetPlatform = tablero.addTilesetImage(
-      //"plataformas",
-      //"tilesPlatform"
-    //);
 
     const worldLayer = this.tablero.createLayer("Fondo", tilesetBelow, 0, 0);
-    //const worldLayer = tablero.createLayer("CasillaRoja", tilesetPlatform, 0, 0);
     const objectsLayer = this.tablero.getObjectLayer("Objetos");
 
-    //worldLayer.setCollisionByProperty({ collides: true });
-
-    // The players and its settings
+    // Los players y sus configuraciones
     let spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo2");
     let player3 = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "sapo2").setScale(0.1);
     spawnPoint = this.tablero.findObject("Players", (obj) => obj.name === "sapo1");
@@ -68,7 +52,6 @@ export class Play extends Phaser.Scene {
     player2.setCollideWorldBounds(true);
     player3.setCollideWorldBounds(true);
     let Players = [player1, player2, player3];
-    //console.log(Players);
     
     //Parte físicas de casillas
 
@@ -94,25 +77,17 @@ export class Play extends Phaser.Scene {
         }
       }
     });
-    //let Casillas = [CasRojas, CasVerdes, CasAmar];
 
     //Agregamos collider con el tablero
     this.physics.add.collider(Players, worldLayer);
-    this.physics.add.collider(casillasTiled, worldLayer); //Ojo acá CASILLAS
-
-    //Agregamos overlap las casillas
-    //this.physics.add.overlap(Players, Casillas, this.Casilla(proxcas), null, this);
-    //this.physics.add.overlap(Players, CasRojas, this.roja, null, this);
-    //this.physics.add.overlap(Players, CasVerdes, this.verde, null, this);
-    //this.physics.add.overlap(Players, CasAmar, this.amarilla, null, this);
+    this.physics.add.collider(casillasTiled, worldLayer);
     
-
     JTurno = 0;
     proxcas = 0;
     this.Proxcasjg = [0, 0, 0];
     puntajeAc = 0;
     this.Turnos = [['0','Jugador 1'],['1','Jugador 2'],['2','Jugador 3']]
-    compartirInstancia.on('actualizarPuntaje', (Puntajes)=>{puntajeAc = Puntajes, console.log(puntajeAc)})
+    compartirInstancia.on('actualizarPuntaje', (Puntajes)=>{puntajeAc = Puntajes})
     compartirInstancia.on('actualizarTurno', (Turno)=>{JTurno = this.Turnos[Turno][0]})
     this.Siguiente = [1, 2, 0];
 
@@ -128,18 +103,14 @@ export class Play extends Phaser.Scene {
           sonid4.play();
           sonidorana.play();
           if (this.Proxcasjg[JTurno] == 0){
-            console.log(this.Proxcasjg[JTurno]);
             this.Posac = this.tablero.findObject("Players", (obj) => obj.type == ('sapo'+[JTurno]));
           } else {
-            console.log(this.Proxcasjg[JTurno]);
             this.Posac = this.tablero.findObject("Objetos", (obj) => obj.type == (this.Proxcasjg[JTurno]).toString());
           }
           let randomNumber = Math.floor(Math.random()*4) + 1;
           compartirInstancia.emit("imprimirD4", randomNumber);
-          //this.imprimirD4(randomNumber);
           this.Proxcasjg[JTurno] += randomNumber;
           proxcas = this.Proxcasjg[JTurno];
-          console.log(proxcas);
 
           if (proxcas>=41) {
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type === "41");
@@ -191,7 +162,6 @@ export class Play extends Phaser.Scene {
             this.Proxcasjg[JTurno] += 8;
             proxcas = this.Proxcasjg[JTurno];
             compartirInstancia.emit('cambiarPuntaje', 20, JTurno);
-            //this.Puntajes[JTurno]-=20;
             let casPoint = this.tablero.findObject("Objetos", (obj) => obj.type == (proxcas));
             setTimeout(() => {
               Players[JTurno].setPosition(posac.x+1, posac.y*0.9);
@@ -214,12 +184,6 @@ export class Play extends Phaser.Scene {
 
       spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Score'));
       this.add.sprite(spawnPoint.x, spawnPoint.y, 'ContMoscas').setScale(0.2);
-      // scoretext = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.60, "0", { //Texto Score
-      //   fontSize: "36px",
-      //   // @ts-ignore
-      //   fill: "#000000",
-      //   fontFamily: 'Century Gothic'   
-      // });
 
     new Button( //Opciones
         this.cameras.main.centerX/8,
@@ -251,7 +215,7 @@ export class Play extends Phaser.Scene {
       sonidorana = this.sound.add('sonidorana');
       let musica = this.sound.add('tematab',{loop: true})
       musica.play();
-      this.scene.run('Interfaz');
+      this.scene.launch('Interfaz');
 
       compartirInstancia.on('retrocesoAmarilla', ()=>{
         const numcas = parseInt(proxcas) - 2;
@@ -265,7 +229,7 @@ export class Play extends Phaser.Scene {
         Players[JTurno].setPosition(casPoint.x+1, casPoint.y+1);
         this.Proxcasjg[JTurno] +=2;})
 
-        compartirInstancia.on('activarBotones', ()=>{
+      compartirInstancia.on('activarBotones', ()=>{
           this.BotonDado.activar()
 		      this.BotonSalto.activar()
         })
@@ -290,13 +254,10 @@ export class Play extends Phaser.Scene {
     Casilla(proxcas, pos){
         if (proxcas == 3 || proxcas == 6 || proxcas == 9 || proxcas == 12 || proxcas == 15 || proxcas == 18  || proxcas == 21 || proxcas == 24 || proxcas == 27 || proxcas == 30 || proxcas == 33 || proxcas == 36 || proxcas == 39){
           compartirInstancia.emit('casillaRoja', proxcas, JTurno)
-          //this.CartaRoja(proxcas);
         } else if (proxcas == 1 || proxcas == 4 || proxcas == 7 || proxcas == 10 || proxcas == 13 || proxcas == 16 || proxcas == 19 || proxcas == 22 || proxcas == 25 || proxcas == 28 || proxcas == 31 || proxcas == 34 || proxcas == 37 || proxcas == 40){
           compartirInstancia.emit('casillaVerde', proxcas, JTurno)
-          //this.CartaVerde(proxcas);
         } else {
           compartirInstancia.emit('casillaAmarilla', proxcas, pos, JTurno)
-          //this.CartaAmarilla(proxcas, pos);
         }
       }
   

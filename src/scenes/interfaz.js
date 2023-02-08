@@ -3,7 +3,8 @@ import CartaVe from "../js/cartasve.js";
 import CartaRo from "../js/cartasro.js";
 import CartaAm from "../js/cartasam.js";
 import compartirInstancia from './EventCenter.js';
-let scoretext;
+import { CARTA1, CARTA10, CARTA11, CARTA12, CARTA13, CARTA15, CARTA16, CARTA2, CARTA3, CARTA4, CARTA5, CARTA6, CARTA7, CARTA8, CARTA9 } from '../enums/cartastexto';
+let scoreText;
 let CTurno;
 
 export class Interfaz extends Phaser.Scene {
@@ -16,25 +17,27 @@ export class Interfaz extends Phaser.Scene {
 	}
 
 	create(){
+		this.carta1sonido = this.sound.add('carta1son');
+		this.carta2sonido = this.sound.add('carta2son');
+		this.cartabiensonido = this.sound.add('cartabienson');
+		this.cartamalsonido = this.sound.add('cartamalson');
 		this.tablero = this.make.tilemap({ key: "tablero"});
 		let spawnPoint = this.tablero.findObject("Botones", (obj) => obj.name == ('Score'));
 		this.Cartulis = ["1","1","2","3","4","5","6","7","8","9","10","11","12","13","11","15","16",
 		"2","3","4","5","6","7","8","9","10","11","12","13","11","15","16","2","3","4","5","6","7","8","9","10"];
+		this.CartulisTexto = ["1",CARTA1,CARTA2,CARTA3,CARTA4,CARTA5,CARTA6,CARTA7,CARTA8,CARTA9,CARTA10,CARTA11,CARTA12,CARTA13,"1",CARTA15,CARTA16];
 		CTurno = 'Jugador 1';
 		this.Puntajes = [0, 0, 0];
 		this.Turnos = [['0','Jugador 1'],['1','Jugador 2'],['2','Jugador 3']]
 		this.Siguiente = [1, 2, 0];
 		this.JugadorTurno("Jugador 1", "0");
-		//const gameplay = this.scene.get('Play');
-		//gameplay.events.on('averga', function(){this.llamadapapu()}, this);
-		//gameplay.events.on('casillaRoja', function(){this.CartaRoja(proxcas)}, this);
-		compartirInstancia.on('casillaRoja', this.CartaRoja, this);
+		compartirInstancia.on('casillaRoja',  this.CartaRoja, this);
 		compartirInstancia.on('casillaVerde', this.CartaVerde, this);
 		compartirInstancia.on('casillaAmarilla', this.CartaAmarilla, this);
 		compartirInstancia.on('cambiarPuntaje', (valor, posicion)=>{ this.Puntajes[posicion] -= valor})
 		CTurno = 'Jugador 1';
 		compartirInstancia.on('imprimirD4', this.imprimirD4, this);
-		scoretext = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.60, "0", { //Texto Score
+		scoreText = this.add.text(spawnPoint.x*1.05, spawnPoint.y*0.7, "0", { //Texto Score
 		fontSize: "36px",
 		// @ts-ignore
 		fill: "#000000",
@@ -43,28 +46,34 @@ export class Interfaz extends Phaser.Scene {
 	}
 //Cartas impresión
 	CartaRoja(NCarta, JTurno){
+		this.carta1sonido.play()
 		this.CartasRojas = new CartaRo( 
 		this.cameras.main.centerX,
 		this.cameras.main.centerY,
 		this.Cartulis[NCarta],
+		this.CartulisTexto[this.Cartulis[NCarta]],
 		this,
 		() => {this.roja(JTurno)})
 	  }
 	  CartaAmarilla(NCarta, pos, JTurno){
+		this.carta2sonido.play()
 		this.CartasAmarillas = new CartaAm( 
 		this.cameras.main.centerX,
 		this.cameras.main.centerY,
 		this.Cartulis[NCarta],
+		this.CartulisTexto[this.Cartulis[NCarta]],
 		this,
 		() => {this.amarilla(NCarta, pos, JTurno)},() => { compartirInstancia.emit('actualizarPuntaje', this.Puntajes[this.Siguiente[JTurno]]),
-		scoretext.setText(this.Puntajes[this.Siguiente[JTurno]]),
+		scoreText.setText(this.Puntajes[this.Siguiente[JTurno]]),
 		this.d4texto.setStyle({backgroundColor: '',fill: "" }), this.CartasAmarillas.desaparecer(), this.turno(JTurno)})
 	  }
 	  CartaVerde(NCarta, JTurno){
+		this.carta2sonido.play()
 		new CartaVe( 
 		this.cameras.main.centerX,
 		this.cameras.main.centerY,
 		this.Cartulis[NCarta],
+		this.CartulisTexto[this.Cartulis[NCarta]],
 		this,
 		() => {this.verde(JTurno)})
 	  }
@@ -72,60 +81,64 @@ export class Interfaz extends Phaser.Scene {
 	  roja(JTurno){
 		let dado20 = this.d20()
 		this.CartasRojas.conseguir().play('dado20anim');
-		this.imprimirD20(dado20, 1.6);
+		this.imprimirD20(dado20, 1.01, 1.65);
 		if (dado20 >= 10) {
-		  this.Puntajes[JTurno]+=10;
+			setTimeout(() => {this.cartabiensonido.play();}, 1000);
+			this.Puntajes[JTurno]+=10;
 		} else {
-		  this.Puntajes[JTurno]-=10;
+			setTimeout(() => {this.cartamalsonido.play();}, 1000);
+		  	this.Puntajes[JTurno]-=10;
 		}
 		setTimeout(() => {
-		  scoretext.setText(this.Puntajes[JTurno]);
+		  scoreText.setText(this.Puntajes[JTurno]);
 		  this.d20texto.setStyle({backgroundColor: '',fill: "" });
 		  this.CartasRojas.desaparecer();
 		  }, 1000);
 		  compartirInstancia.emit('actualizarPuntaje', this.Puntajes[this.Siguiente[JTurno]]);
-		  //^puntajeAc = this.Puntajes[this.Siguiente[JTurno]];
 		this.d4texto.setStyle({backgroundColor: '',fill: "" });
 		setTimeout(() => {
 		  this.turno(JTurno);
-		  scoretext.setText(this.Puntajes[this.Siguiente[JTurno]]);
+		  scoreText.setText(this.Puntajes[this.Siguiente[JTurno]]);
 		  }, 2000);
 	  }
   
 	  verde(JTurno){
+		this.cartabiensonido.play();
 		this.Puntajes[JTurno]+=5;
-		scoretext.setText(this.Puntajes[JTurno]);
+		scoreText.setText(this.Puntajes[JTurno]);
 		compartirInstancia.emit('actualizarPuntaje', this.Puntajes[this.Siguiente[JTurno]]);
 		this.d4texto.setStyle({backgroundColor: '',fill: "" });
 		setTimeout(() => {
 		  this.turno(JTurno);
-		  scoretext.setText(this.Puntajes[this.Siguiente[JTurno]]);
+		  scoreText.setText(this.Puntajes[this.Siguiente[JTurno]]);
 		}, 2000);
 	  }
   
 	  amarilla(proxcas, pos, JTurno){
 		let dado20 = this.d20()
 		this.CartasAmarillas.conseguir().play('dado20anim');
-		this.imprimirD20(dado20, 1.4);
+		this.imprimirD20(dado20, 1, 1.45);
 		if (dado20 >= 8) {
-		  setTimeout(() => {
-			compartirInstancia.emit('avanceAmarilla')
-			this.d20texto.setStyle({backgroundColor: '',fill: "" });
-			this.CartasAmarillas.desaparecer();
+		  	setTimeout(() => {
+				this.cartabiensonido.play();
+				compartirInstancia.emit('avanceAmarilla')
+				this.d20texto.setStyle({backgroundColor: '',fill: "" });
+				this.CartasAmarillas.desaparecer();
 			}, 1000);
 		} else {
-		  setTimeout(() => {
-			compartirInstancia.emit('retrocesoAmarilla')
-			this.d20texto.setStyle({backgroundColor: '',fill: "" });
-			this.CartasAmarillas.desaparecer();
+		  	setTimeout(() => {
+				this.cartamalsonido.play();
+				compartirInstancia.emit('retrocesoAmarilla');
+				this.d20texto.setStyle({backgroundColor: '',fill: "" });
+				this.CartasAmarillas.desaparecer();
 			}, 1000);
 		}
-		scoretext.setText(this.Puntajes[JTurno]);
+		scoreText.setText(this.Puntajes[JTurno]);
 		compartirInstancia.emit('actualizarPuntaje', this.Puntajes[this.Siguiente[JTurno]]);
 		this.d4texto.setStyle({backgroundColor: '',fill: "" });
 		setTimeout(() => {
 		  this.turno(JTurno);
-		  scoretext.setText(this.Puntajes[this.Siguiente[JTurno]]);
+		  scoreText.setText(this.Puntajes[this.Siguiente[JTurno]]);
 		}, 2000);
 	  }
 
@@ -152,17 +165,17 @@ export class Interfaz extends Phaser.Scene {
 				fontFamily: 'Century Gothic'
 			})}, 500);
 		  }
-		  imprimirD20(DNum, dimensionY){
+		  imprimirD20(DNum, dimensionX, dimensionY){
 			setTimeout(() => {
-			this.d20texto = this.add.text(this.cameras.main.centerX*0.984, this.cameras.main.centerY*dimensionY, DNum)
+			this.d20texto = this.add.text(this.cameras.main.centerX*dimensionX, this.cameras.main.centerY*dimensionY, DNum)
 			.setStyle({ 
 				backgroundColor: '#a879ff', fontSize: '50px', 
 				fontFamily: 'Century Gothic'
-			})}, 500);
+			})
+			this.d20texto.setOrigin(0.5)}, 500);
 		  }
 		  //Calculo del dado
 		  d20(){
 			return Math.floor(Math.random()*20) + 1;
 		  }
 }
-

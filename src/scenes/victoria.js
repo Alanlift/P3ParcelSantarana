@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Button from "../js/button.js";
+import compartirInstancia from "./EventCenter.js";
 
 let JTurno;
 
@@ -40,6 +41,9 @@ export class Victoria extends Phaser.Scene {
       this,
       () => {
         botonmenu.play();
+        compartirInstancia.removeAllListeners();
+        this.scene.stop('Interfaz');
+        this.scene.start("MainMenu");
         this.scene.start("MainMenu");
         musica.play();
       }
