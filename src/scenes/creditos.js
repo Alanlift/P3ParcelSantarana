@@ -27,7 +27,7 @@ export class Creditos extends Phaser.Scene {
 
     const juan = this.sound.add("juanson");
     const botonjuan = new Button(
-      this.cameras.main.centerX * 0.53, //Juan
+      this.cameras.main.centerX * 0.6, //Juan Imagen
       this.cameras.main.centerY * 0.55,
       "juanpp",
       this,
@@ -36,17 +36,17 @@ export class Creditos extends Phaser.Scene {
       }
     );
     this.add.text(
-      this.cameras.main.centerX * 0.53, //Juan
-      this.cameras.main.centerY * 0.55,
-       getPhrase('Diseño de Juego - Y - Arte')).setStyle({ 
-      backgroundColor: '#a879ff', fontSize: '50px', 
+      this.cameras.main.centerX * 0.4, //Juan Texto
+      this.cameras.main.centerY * 0.75, "Juan Pablo\n Gutierrez\n"+
+       getPhrase('Diseñador de Juego-Artista')).setStyle({ 
+      fontSize: '30px', 
       fontFamily: 'Century Gothic', align: "center"
   });
 
     const juli = this.sound.add("julison");
     const botonjuli = new Button(
-      this.cameras.main.centerX * 1.4, //Juli
-      this.cameras.main.centerY * 1.19,
+      this.cameras.main.centerX * 1.4, //Juli Imagen
+      this.cameras.main.centerY * 1.25,
       "julipp",
       this,
       () => {
@@ -54,16 +54,16 @@ export class Creditos extends Phaser.Scene {
       }
     );
     this.add.text(
-      this.cameras.main.centerX * 1.4, //Juli
-      this.cameras.main.centerY * 1.19,
-       getPhrase('Programador')).setStyle({ 
-      backgroundColor: '#a879ff', fontSize: '50px', 
-      fontFamily: 'Century Gothic'
+      this.cameras.main.centerX * 1.28, //Juli Texto
+      this.cameras.main.centerY * 1.4, "Julian Cravero\n"+
+       getPhrase('Artista')).setStyle({ 
+      fontSize: '30px', 
+      fontFamily: 'Century Gothic', align: "center"
     });
 
     const alan = this.sound.add("alanson");
     const botonalan = new Button(
-      this.cameras.main.centerX * 1.4, //Alan
+      this.cameras.main.centerX * 1.4, //Alan Imagen
       this.cameras.main.centerY * 0.55,
       "alanpp",
       this,
@@ -72,17 +72,17 @@ export class Creditos extends Phaser.Scene {
       }
     );
     this.add.text(
-      this.cameras.main.centerX * 1.4, //Alan
-      this.cameras.main.centerY * 0.55,
-       getPhrase('Artista')).setStyle({ 
-      backgroundColor: '#a879ff', fontSize: '50px', 
-      fontFamily: 'Century Gothic'
+      this.cameras.main.centerX * 1.28, //Alan Texto
+      this.cameras.main.centerY * 0.75, "Alan Ezequiel\n Farias\n"+
+       getPhrase('Programador')).setStyle({ 
+      fontSize: '30px', 
+      fontFamily: 'Century Gothic', align: "center"
   });
 
     const cabra = this.sound.add("cabrason");
     const botoncabra = new Button(
-      this.cameras.main.centerX * 0.53, //Cabra
-      this.cameras.main.centerY * 1.19,
+      this.cameras.main.centerX * 0.6, //Cabra Imagen
+      this.cameras.main.centerY * 1.25,
       "cabrapp",
       this,
       () => {
@@ -90,11 +90,11 @@ export class Creditos extends Phaser.Scene {
       }
     );
     this.add.text(
-      this.cameras.main.centerX * 0.53, //Cabra
-      this.cameras.main.centerY * 1.19,
-       getPhrase('Artista')).setStyle({ 
-      backgroundColor: '#a879ff', fontSize: '50px', 
-      fontFamily: 'Century Gothic'
+      this.cameras.main.centerX * 0.4, //Cabra Texto
+      this.cameras.main.centerY * 1.4, "Lautaro Cabrera\n"+
+       getPhrase('Diseñador de Juego-Sonido')).setStyle({ 
+      fontSize: '30px', 
+      fontFamily: 'Century Gothic', align: "center"
   });
 
     const botonunraf = new Button(
