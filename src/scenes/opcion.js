@@ -1,5 +1,5 @@
 import Button from "../js/buttonfont.js";
-
+import compartirInstancia from './EventCenter.js';
 // Clase Opcion, donde se cambia el idioma del juego
 export class Opcion extends Phaser.Scene {
     constructor() {
@@ -18,8 +18,8 @@ export class Opcion extends Phaser.Scene {
               'Si', this, () => {
             // Instrucción volver a la escena Menu
             this.sound.stopAll();
-            const interfaz = this.scene.get('Interfaz');
-            this.scene.restart(interfaz); //Tiro restart debido a que por el run la escena se bugea y no para de tirar dados
+            compartirInstancia.removeAllListeners();
+            this.scene.stop('Interfaz');
             this.scene.stop('Play');
             this.scene.start("MainMenu");
             botonmenu.play();
