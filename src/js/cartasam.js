@@ -10,14 +10,13 @@ class CartaAm {
     (this.texto = scene.add
       .text(x * 1, y * 1.22, getPhrase(texto))
       .setStyle({ 
-        backgroundColor: '#571d05', 
         fontSize: '26px', 
         fill: '#000000', 
         align: "center",
         fontFamily: 'Century Gothic',
     }));
       (this.boton2 = scene.add
-        .sprite(x * 1, y * 1.46, "botonam1")
+        .sprite(x * 1, y * 1.46, getPhrase("botonam1"))
         .setScale(0.5)),
       (this.daduli = scene.add
         .sprite(x * 0.99, y * 1.46, "dado20icon")

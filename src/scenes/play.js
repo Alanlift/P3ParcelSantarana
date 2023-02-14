@@ -20,7 +20,6 @@ export class Play extends Phaser.Scene {
   preload() {
       this.load.tilemapTiledJSON("tablero", "assets/tilemaps/tablero.json");
       this.load.image("tilesBelow", "assets/images/tablero_bg.png");
-
   }
 
   create() {

@@ -8,15 +8,14 @@ class CartaRo {
     (this.fondocarta = scene.add.image(x, y, img1).setScale(0.5)),
     (this.texto = scene.add
       .text(x * 1, y * 1.3, getPhrase(texto))
-      .setStyle({ 
-        backgroundColor: '#571d05', 
+      .setStyle({  
         fontSize: '30px', 
         fill: '#000000', 
         align: "center",
         fontFamily: 'Century Gothic',
     }));
       (this.boton2 = scene.add
-        .sprite(x * 1, y * 1.65, "botonro1")
+        .sprite(x * 1, y * 1.65,  getPhrase("botonro1"))
         .setScale(0.5)),
       (this.daduli = scene.add
         .sprite(x * 1, y * 1.65, "dado20icon")

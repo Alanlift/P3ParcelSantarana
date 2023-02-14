@@ -27,7 +27,7 @@ export class Creditos extends Phaser.Scene {
 
     const juan = this.sound.add("juanson");
     const botonjuan = new Button(
-      this.cameras.main.centerX * 0.6, //Juan Imagen
+      this.cameras.main.centerX * 0.58, //Juan Imagen
       this.cameras.main.centerY * 0.55,
       "juanpp",
       this,
@@ -55,7 +55,7 @@ export class Creditos extends Phaser.Scene {
     );
     this.add.text(
       this.cameras.main.centerX * 1.28, //Juli Texto
-      this.cameras.main.centerY * 1.4, "Julian Cravero\n"+
+      this.cameras.main.centerY * 1.45, "Julian Cravero\n"+
        getPhrase('Artista')).setStyle({ 
       fontSize: '30px', 
       fontFamily: 'Century Gothic', align: "center"
@@ -81,7 +81,7 @@ export class Creditos extends Phaser.Scene {
 
     const cabra = this.sound.add("cabrason");
     const botoncabra = new Button(
-      this.cameras.main.centerX * 0.6, //Cabra Imagen
+      this.cameras.main.centerX * 0.58, //Cabra Imagen
       this.cameras.main.centerY * 1.25,
       "cabrapp",
       this,
@@ -91,7 +91,7 @@ export class Creditos extends Phaser.Scene {
     );
     this.add.text(
       this.cameras.main.centerX * 0.4, //Cabra Texto
-      this.cameras.main.centerY * 1.4, "Lautaro Cabrera\n"+
+      this.cameras.main.centerY * 1.45, "Lautaro Cabrera\n"+
        getPhrase('Diseñador de Juego-Sonido')).setStyle({ 
       fontSize: '30px', 
       fontFamily: 'Century Gothic', align: "center"

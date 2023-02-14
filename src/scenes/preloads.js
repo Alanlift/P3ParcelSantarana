@@ -1,7 +1,9 @@
 // Clase Preloads, para separar los peloads y tener mejor orden
 import Phaser from 'phaser';
 import { ES_AR } from '../enums/lenguajes';
+import { getData } from '../services/basededatos';
 import { getTranslations } from "../services/traducciones";
+import compartirInstancia from './EventCenter';
 export class Preloads extends Phaser.Scene {
   constructor() {
     super("Preloads");
@@ -41,7 +43,6 @@ export class Preloads extends Phaser.Scene {
     this.load.image('tabla_bg','assets/images/tabla_bg.png');
     this.load.image('creditos_bg','assets/images/creditos_bg.png');
     this.load.image('tablero_bg','assets/images/tablero_bg.png');
-    this.load.image('tablero_blur','assets/images/tablero_blur.png');
     this.load.image('ayuda_bg','assets/images/ayuda_bg.png');
     this.load.image('ayuda2_bg','assets/images/ayuda2_bg.png');
     this.load.image('nubes_bg','assets/images/nubes.png');
@@ -119,6 +120,9 @@ export class Preloads extends Phaser.Scene {
     this.load.image('Jugador 1','assets/images/turno1.png');
     this.load.image('Jugador 2','assets/images/turno2.png');
     this.load.image('Jugador 3','assets/images/turno3.png');
+    this.load.image('Player 1','assets/images/turn1.png');
+    this.load.image('Player 2','assets/images/turn2.png');
+    this.load.image('Player 3','assets/images/turn3.png');
     this.load.image('ContMoscas','assets/images/moscas.png');
     this.load.image('flechuli','assets/images/flecha.png');
     //Cartas
@@ -139,27 +143,27 @@ export class Preloads extends Phaser.Scene {
     this.load.image('16','assets/images/cartas/Verde5.png');
     //BotonesCartas
     this.load.image('botonam1','assets/images/cartas/Boton1Amarilla.png');
+    this.load.image('buttonam1','assets/images/cartas/Button1Amarilla.png');
     this.load.image('botonam2','assets/images/cartas/Boton2Amarilla.png');
     this.load.image('botonro1','assets/images/cartas/Boton1Rojo.png');
+    this.load.image('buttonro1','assets/images/cartas/Button1Rojo.png');
   }
 
   create() {
     // Se agrega img de fondo
     let musica = this.sound.add('temamen',{loop: true})
-    this.add.image(this.cameras.main.centerX,
-    this.cameras.main.centerY,
-       'carga_bg').setScale(0.5);
+    this.add.image(this.cameras.main.centerX, this.cameras.main.centerY,'carga_bg').setScale(0.5);
     this.add.text(this.cameras.main.centerX,
       this.cameras.main.centerY + this.cameras.main.centerY/1.5, 'Cargando...')
        .setOrigin(0.5)
        .setPadding(10)
-       .setStyle({ 
-           backgroundColor: '#0000', 
-           fontSize: '60px', 
-           fill: '#6c4600', 
-           fontFamily: 'Arial'
-       })
-      //this.player = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'despawn'); sale animazao
+       .setStyle({  backgroundColor: '#0000', fontSize: '60px', fill: '#6c4600', fontFamily: 'Century Gothic'})
+    getData(Math.floor(Math.random()*10) + 1);
+    compartirInstancia.on('pasarDato', (dato) =>this.add.text(this.cameras.main.centerX, this.cameras.main.centerY*1.5,'"'+ dato+'"')
+       .setOrigin(0.5)
+       .setPadding(10)
+       .setStyle({  backgroundColor: '#0000', fontSize: '60px', fill: '#6c4600', fontFamily: 'Century Gothic'}))
+       //Creamos las animaciones
       this.anims.create({key:"desfrog", frames: this.anims.generateFrameNumbers("despawn", {start:0, end:6}), duration: 900, repeat:0})
       this.anims.create({key:"sfrog", frames: this.anims.generateFrameNumbers("spawn", {start:0, end:6}), duration: 900, repeat:0})
       this.anims.create({key:"saltote1", frames: this.anims.generateFrameNumbers("elsaltote1", {start:9, end:0}), duration: 500, repeat:0})

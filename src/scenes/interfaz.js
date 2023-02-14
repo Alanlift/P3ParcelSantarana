@@ -4,6 +4,7 @@ import CartaRo from "../js/cartasro.js";
 import CartaAm from "../js/cartasam.js";
 import compartirInstancia from './EventCenter.js';
 import { CARTA1, CARTA10, CARTA11, CARTA12, CARTA13, CARTA15, CARTA16, CARTA2, CARTA3, CARTA4, CARTA5, CARTA6, CARTA7, CARTA8, CARTA9 } from '../enums/cartastexto';
+import { getPhrase } from '../services/traducciones.js';
 let scoreText;
 let CTurno;
 
@@ -152,7 +153,7 @@ export class Interfaz extends Phaser.Scene {
 
 	      //Textos
 		  JugadorTurno(TurnoText, Turno){
-			this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, TurnoText).setScale(0.18);
+			this.add.image(this.cameras.main.centerX, this.cameras.main.centerY-this.cameras.main.centerY/1.15, getPhrase(TurnoText)).setScale(0.18);
 			this.add.image(this.cameras.main.centerX*1.11, this.cameras.main.centerY-this.cameras.main.centerY/1.08, "sapo"+Turno).setScale(0.06);
 		  }
 
