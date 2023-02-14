@@ -34,6 +34,7 @@ export class Configuracion extends Phaser.Scene {
           "🇦🇷",
           this,
           () => {
+            botonmenu.play();
             getTranslations(ES_AR);
           }
         );
@@ -44,6 +45,7 @@ export class Configuracion extends Phaser.Scene {
             "🇺🇸",
             this,
             () => {
+              botonmenu.play();
               getTranslations(EN_US);
             }
         );

@@ -9,7 +9,6 @@ class CartaVe {
             (this.texto = scene.add
               .text(x * 1, y * 1.3, getPhrase(texto))
               .setStyle({ 
-                backgroundColor: '#571d05', 
                 fontSize: '30px', 
                 fill: '#000000', 
                 align: "center",
